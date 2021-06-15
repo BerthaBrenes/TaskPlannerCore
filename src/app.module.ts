@@ -11,7 +11,7 @@ import { RequestModule } from './request/request.module';
 import { UsersModule } from './users/users.module';
 import { SisconfigModule } from './sisconfig/sisconfig.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './columns/config/typeorm.config';
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
