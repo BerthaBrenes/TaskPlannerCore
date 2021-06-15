@@ -4,11 +4,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
  */
 export const typeOrmConfig: TypeOrmModuleOptions = {
     type: 'mongodb',
-    host: 'taskplannerdb.cczo0xw8oncg.us-east-2.rds.amazonaws.com',
-    port: 5432,
+    host: 'mongodb+srv://db_client:tpmdb_client2021@taskplannerce.vdwdf.mongodb.net/taskplannerdb?retryWrites=true&w=majority',
+    port: 27017,
     username: 'db_client',
     password:'tbmdb_client2021',
-    database:  'taskplanner',
+    database:  'taskplannerdb',
     entities: [
         'dist/**/*.entity.js',
         './**/*.entity.js'],
