@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    app:
+        image: taskplanner
+        environment: 
+            MONGO_URL:
+            POSTGRES_URL:
+        depends_on: 
+        ports: 
+            - "3000:3000"
+    
+    mongo:
+        image: mongo
+    
+    postgres:
+        image: postgres

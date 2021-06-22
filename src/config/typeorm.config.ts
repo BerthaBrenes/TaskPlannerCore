@@ -16,3 +16,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     useUnifiedTopology: true,
     ssl: true
 }
+
+const a = 1;
