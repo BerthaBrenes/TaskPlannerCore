@@ -1,4 +1,5 @@
 import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { statusType } from "./dto/statusType.enum";
 
 @Entity()
 export class RequestI extends BaseEntity{
@@ -12,5 +13,5 @@ export class RequestI extends BaseEntity{
     toUserId: string;
     
     @Column()
-    status: string;
+    status: statusType;
 }
