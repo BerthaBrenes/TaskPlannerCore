@@ -31,4 +31,5 @@ import { typeOrmConfig } from './config/typeorm.config';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}
