@@ -1,4 +1,5 @@
-import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryColumn, Column, ManyToOne } from "typeorm";
+import { ColumnI } from "src/columns/columns.entity";
 
 @Entity()
 export class TareasI extends BaseEntity{
@@ -23,6 +24,6 @@ export class TareasI extends BaseEntity{
     @Column()
     dependency: string;
 
-    @Column()
+    @ManyToOne(() => ColumnI, column => column.Tareas)
     column: string;
 }
