@@ -24,6 +24,8 @@ export class Node {
         this._name = name;
         this._nexts = [];
         this._prevs = [];
+        this.earliestFinish = 0;
+        this.latestStart = 0;
         this.duration = this.calculateDuration(start, finish);
     }
 

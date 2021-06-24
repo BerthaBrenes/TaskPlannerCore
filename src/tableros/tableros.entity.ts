@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { ColumnI } from "src/columns/columns.entity";
-import { UserI } from "src/users/users.entity";
+import { ColumnI } from "../columns/columns.entity";
+import { UserI } from "../users/users.entity";
 import { tableroType } from "./dto/tableroType.enum";
 
 @Entity()
