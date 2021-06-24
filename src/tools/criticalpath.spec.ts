@@ -95,4 +95,14 @@ describe('Graph test',() => {
     expect(graph.bfs('A')).toBeDefined();
 
   });
+
+  it('should correctly determine whether a node is a leaf or not', () => {
+
+    
+    expect(graph.isLeafNode('D')).toBeTruthy();
+    expect(graph.isLeafNode('C')).toBeFalsy();
+    expect(graph.isLeafNode('A')).toBeFalsy();
+    expect(graph.isLeafNode('E')).toBeTruthy();
+
+  });
 });
