@@ -89,7 +89,7 @@ export class CriticalPath {
             });
 
             currentNode.setEarliestStart(start);
-            console.log(currentNode);
+            //console.log(currentNode);
         });
     }
 
@@ -101,7 +101,29 @@ export class CriticalPath {
     private static backwardPass() {
         const route = this.graph.bfs('finish');
 
-        console.log('foo');        
+        route.forEach( node => {
+            
+            let finish = 0;
+
+            const currentNode = this.graph.nodes.find(n => n.name === node);
+            
+            
+            // Get latest start date
+            currentNode.nexts.forEach(p => {
+                const nextNode = this.graph.nodes.find(n => n.name === p);
+                if (nextNode.latestStart > finish)
+                    finish = nextNode.latestStart;
+            });
+
+            // Assumption: Latest finish date = Earliest Finish date (of project)
+            if (currentNode.name === 'finish'){
+                finish = currentNode.earliestFinish;
+            }
+
+            currentNode.setLatestFinish(finish);
+            currentNode.calculateSlack();
+            //console.log(currentNode);
+        });      
     }
     
 }

@@ -43,10 +43,10 @@ export class Node {
 
 
     /**
-     * Calculates the float value of the task. This value allows to determine the 
+     * Calculates the slack value of the task. This value allows to determine the 
      * criticality of the task.
      */
-    public calculateFloat(): void {
+    public calculateSlack(): void {
         this.slack = (this.latestFinish - this.earliestFinish) || 
                      (this.latestStart - this.earliestStart);
     }
