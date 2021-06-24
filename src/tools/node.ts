@@ -1,26 +1,28 @@
-import { TareasI } from "src/tareas/tareas.entity";
-
 /**
  * Node containing the representation of a task in the network to calculate 
  * the critical path of the project.
  */
 export class Node {
-    private next: Node[];
-    private task: string;
-    private id: string;
-    private slack: number;
+    private _edges: string[];
+    private _name: string;
 
+    private slack: number;
     public duration: number;
     public earliestStart: number;
     public latestStart: number;
     public earliestFinish: number;
     public latestFinish: number;
 
-    constructor(task: TareasI) {
-        this.next = [];
-        this.task = task.name;
-        this.id = task.id;
-        this.duration = this.calculateDuration(task.startDate,task.endDate);
+    /**
+     * Creates a new node with empty edges.
+     * @param name Name of the node.
+     * @param start Task start date.
+     * @param finish Task completion date. 
+     */
+    constructor(name: string, start: string, finish: string) {
+        this._name = name;
+        this._edges = [];
+        this.duration = this.calculateDuration(start, finish);
     }
 
     /**
@@ -32,7 +34,7 @@ export class Node {
     private calculateDuration(start: string, finish: string): number{
         const startDate = new Date(start);
         const finishDate = new Date(finish);
-        return Math.ceil((finishDate.valueOf() - startDate.valueOf())/7);
+        return Math.round((finishDate.getTime() - startDate.getTime())/(1000 * 3600 * 24));
     }
 
 
@@ -53,12 +55,36 @@ export class Node {
         return this.slack == 0;
     }
 
-    public getNext(): Node[] {
-        return this.next;
+    
+    // Set earlies start day and calculates earliest finish day
+    public setEarliestStart(d: number) {
+        this.earliestStart = d;
+        this.earliestFinish = this.earliestStart + this.duration;
     }
 
-    public setNext(next: Node): void {
-        this.next.push(next);
+    // Set latest finish day and calculates latest start day
+    public setLatestFinish(d: number) {
+        this.latestFinish = d;
+        this.latestStart = this.latestFinish - this.duration;
     }
 
+
+    // Edges associated with the node
+    public get edges(): string[] {
+        return this._edges;
+    }
+
+    public set edges(e: string[]) {
+        this._edges = e;
+    }
+
+
+    // Name of the node
+    public get name(): string {
+        return this._name;
+    }
+
+    public set name(n: string) {
+        this._name = n;
+    }
 }
