@@ -32,9 +32,9 @@ export class Graph {
      */
     addEdge(src: string, dst: string): boolean {
         // Add destiny node to source node
-        this._adjList.find(n => n.name === src).edges.push(dst);
+        this._adjList.find(n => n.name === src).nexts.push(dst);
         // Add source node to destiny node
-        this._adjList.find(n => n.name === dst).edges.push(src);
+        this._adjList.find(n => n.name === dst).prevs.push(src);
         return true;
     }
 
@@ -66,6 +66,25 @@ export class Graph {
         return result;
     }
 
+    /**
+     * Indicates whether a node is a leaf node.
+     * @param nodeName Name of node to be evaluated.
+     */
+    public isLeafNode(nodeName: string): boolean {
+        let isLeaf = true;
+
+        for (let node of this._adjList) {
+            if (node.prevs.find(n => n === nodeName)){
+                isLeaf = false;
+                break;
+            }
+        }
+
+        return isLeaf;
+    }
+
+    
+    // Returns nodes list
     public get nodes(): Node[] {
         return this._adjList; 
     }

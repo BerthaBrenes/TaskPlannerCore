@@ -3,7 +3,8 @@
  * the critical path of the project.
  */
 export class Node {
-    private _edges: string[];
+    private _prevs: string[];
+    private _nexts: string[];
     private _name: string;
 
     private slack: number;
@@ -19,9 +20,10 @@ export class Node {
      * @param start Task start date.
      * @param finish Task completion date. 
      */
-    constructor(name: string, start: string, finish: string) {
+    constructor(name: string, start = '2021-01-01', finish = '2021-01-01') {
         this._name = name;
-        this._edges = [];
+        this._nexts = [];
+        this._prevs = [];
         this.duration = this.calculateDuration(start, finish);
     }
 
@@ -55,7 +57,7 @@ export class Node {
         return this.slack == 0;
     }
 
-    
+
     // Set earlies start day and calculates earliest finish day
     public setEarliestStart(d: number) {
         this.earliestStart = d;
@@ -71,11 +73,26 @@ export class Node {
 
     // Edges associated with the node
     public get edges(): string[] {
-        return this._edges;
+        return this._prevs.concat(this._nexts);
     }
 
-    public set edges(e: string[]) {
-        this._edges = e;
+    // Nodes to which the current node goes
+    public get nexts(): string[] {
+        return this._nexts;
+    }
+
+    public set nexts(e: string[]) {
+        this._nexts = e;
+    }
+
+
+    // Nodes arriving at the current node
+    public get prevs(): string[] {
+        return this._prevs;
+    }
+
+    public set prevs(e: string[]) {
+        this._prevs = e;
     }
 
 
