@@ -23,7 +23,7 @@ export class TareasI extends BaseEntity{
     owner: string;
 
     @Column()
-    dependency: string;
+    dependency: string[];
 
     @ManyToOne(() => ColumnI, column => column.Tareas)
     column: ColumnI;
