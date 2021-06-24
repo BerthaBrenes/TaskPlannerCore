@@ -3,7 +3,7 @@ import { Graph } from "./graph";
 import { Node } from "./node";
 
 /**
- * @bnief Module that provides a resource to calculate the critical path of a project 
+ * @brief Module that provides a resource to calculate the critical path of a project 
  * using the CPM algorithm.
  * @author @estalvgs1999
  * @version 2021.06.24
