@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { SisconfigModule } from './sisconfig/sisconfig.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
+import { ToolsModule } from './tools/tools.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { typeOrmConfig } from './config/typeorm.config';
     RequestModule,
     UsersModule,
     SisconfigModule,
-    TypeOrmModule.forRoot(typeOrmConfig)
+    TypeOrmModule.forRoot(typeOrmConfig),
+    ToolsModule
   
   ],
   controllers: [AppController],

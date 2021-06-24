@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { TablerosI } from 'src/tableros/tableros.entity';
-import { TareasI } from 'src/tareas/tareas.entity';
+import { TablerosI } from '../tableros/tableros.entity';
+import { TareasI } from '../tareas/tareas.entity';
 
 @Entity()
 export class ColumnI extends BaseEntity{
