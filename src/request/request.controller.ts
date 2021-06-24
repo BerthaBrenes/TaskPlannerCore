@@ -42,23 +42,23 @@ export class RequestController implements OnApplicationShutdown {
   @ApiNotFoundResponse({ description: 'request id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async deleteColumn(@Param('id') id : string){
+  async deleteColumn(@Param('id') id: string) {
     return this.requesService.deleteRequest(id);
   }
   /**
      * Get the columns of one tablero
      * @param id of the tablero
      */
-    @Get('/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'tablero id not found' })
-    @ApiOperation({ summary: 'Get the columns of one tablero' })
-    @UsePipes(ValidationPipe)
-    async getColumns(@Param('id') id: string) {
-        this.logger.verbose(`Delete a column ${id}`);
-        return await this.requesService.getRequest(id);
-    }
+  @Get('/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'tablero id not found' })
+  @ApiOperation({ summary: 'Get the columns of one tablero' })
+  @UsePipes(ValidationPipe)
+  async getColumns(@Param('id') id: string) {
+    this.logger.verbose(`Delete a column ${id}`);
+    return await this.requesService.getRequest(id);
+  }
   /**
    * Change a new status in the request
    * @param id of the request
@@ -70,37 +70,37 @@ export class RequestController implements OnApplicationShutdown {
   @ApiNotFoundResponse({ description: 'request id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async changeStatus(@Param('id') id : string, @Param('status') status : statusType){
+  async changeStatus(@Param('id') id: string, @Param('status') status: statusType) {
     return this.requesService.setStatus(id, status);
   }
-    /**
-     * Get the request
-     * @param id of the user from the request is
-     */
-    @Get('FromUser/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'request id not found' })
-    @ApiOperation({ summary: 'Get the request' })
-    @UsePipes(ValidationPipe)
-    async getRequestFrom(@Param('id') id: string) {
-        this.logger.verbose(`Get the request ${id}`);
-        return await this.requesService.getRequestByFrom(id);
-    }
-    /**
-     * Get the request
-     * @param id of the tablero
-     */
-    @Get('ToUser/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'request id not found' })
-    @ApiOperation({ summary: 'Get the request' })
-    @UsePipes(ValidationPipe)
-    async getRequestBy(@Param('id') id: string) {
-        this.logger.verbose(`Get the request ${id}`);
-        return await this.requesService.getRequestBy(id);
-    }
+  /**
+   * Get the request
+   * @param id of the user from the request is
+   */
+  @Get('FromUser/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'request id not found' })
+  @ApiOperation({ summary: 'Get the request' })
+  @UsePipes(ValidationPipe)
+  async getRequestFrom(@Param('id') id: string) {
+    this.logger.verbose(`Get the request ${id}`);
+    return await this.requesService.getRequestByFrom(id);
+  }
+  /**
+   * Get the request
+   * @param id of the tablero
+   */
+  @Get('ToUser/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'request id not found' })
+  @ApiOperation({ summary: 'Get the request' })
+  @UsePipes(ValidationPipe)
+  async getRequestBy(@Param('id') id: string) {
+    this.logger.verbose(`Get the request ${id}`);
+    return await this.requesService.getRequestBy(id);
+  }
   /**
    * shutdown the process
    * @param signal event

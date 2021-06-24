@@ -10,7 +10,7 @@ export class RequestRepository extends Repository<RequestI>{
         const request = new RequestI();
         request.fromUserId = fromUserId;
         request.toUserId = toUserId;
-        request.status = toUserId;
+        request.status = status;
         return await request.save();
     }
 }
