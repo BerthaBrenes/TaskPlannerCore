@@ -89,4 +89,9 @@ export class Graph {
         return this._adjList; 
     }
 
+    // 
+    public set nodes(nodes: Node[]) {
+        this._adjList = nodes;
+    }
+
 }
