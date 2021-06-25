@@ -1,22 +1,22 @@
 import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { ColumnI } from "../columns/columns.entity";
-import { UserI } from "../users/users.entity";
+import { User } from "../users/users.entity";
 import { tableroType } from "./dto/tableroType.enum";
 
 @Entity()
-export class TablerosI extends BaseEntity{
+export class Board extends BaseEntity{
     @PrimaryColumn()
     id: string;
 
     @Column()
     name: string;
 
-    @ManyToOne(() => UserI, user => user.id)
-    owner: UserI;
+    @ManyToOne(() => User, user => user.id)
+    owner: User;
     
-    @ManyToMany(() => UserI)
+    @ManyToMany(() => User)
     @JoinTable()
-    friends: UserI[];
+    friends: User[];
 
     @Column()
     type: tableroType;

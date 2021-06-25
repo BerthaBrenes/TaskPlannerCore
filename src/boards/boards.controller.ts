@@ -1,12 +1,12 @@
 import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Delete, Param, Patch, Get } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiResponse, ApiOperation, ApiParam, ApiNotFoundResponse } from '@nestjs/swagger';
-import { TablerosService } from './tableros.service';
-import { sisconfigDTO } from 'src/sisconfig/dto/sisconfig.dto';
-import { TableroDTO } from './dto/tableros.dto';
+import { BoardsService } from './boards.service';
+import { SysConfigDTO } from 'src/sysconfig/dto/sysconfig.dto';
+import { BoardDTO } from './dto/boards.dto';
 
-@ApiTags('Tableros')
-@Controller('tableros')
-export class TablerosController implements OnApplicationShutdown {
+@ApiTags('boards')
+@Controller('boards')
+export class BoardsController implements OnApplicationShutdown {
   /**
   * Variable for the logger
   */
@@ -15,17 +15,17 @@ export class TablerosController implements OnApplicationShutdown {
    * First method in the tablero
    * @param tableroService Controller for tablero
    */
-  constructor(private readonly tableroService: TablerosService) { }
+  constructor(private readonly tableroService: BoardsService) { }
   /**
  * Create a new tablero
  * @param data of the request
  */
   @Post()
-  @ApiBody({ required: true, type: TableroDTO })
+  @ApiBody({ required: true, type: BoardDTO })
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Create a new tablero' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: TableroDTO) {
+  async createColumn(@Body() data: BoardDTO) {
     this.logger.verbose(`Create a new tablero`);
     return await this.tableroService.createTablero(data);
   }
@@ -50,12 +50,12 @@ export class TablerosController implements OnApplicationShutdown {
   */
   @Patch('/:id')
   @ApiParam({ name: 'id' })
-  @ApiBody({ required: true, type: TableroDTO })
+  @ApiBody({ required: true, type: BoardDTO })
   @ApiOperation({ summary: 'Update the data of a tarea' })
   @ApiNotFoundResponse({ description: 'tarea id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async updateTarea(@Param('id') id: string, @Body() data: TableroDTO) {
+  async updateTarea(@Param('id') id: string, @Body() data: BoardDTO) {
     return this.tableroService.updateTablero(id, data);
   }
   /**

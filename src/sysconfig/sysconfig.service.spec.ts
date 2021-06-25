@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TablerosService } from './tableros.service';
+import { SysConfigService } from './sysconfig.service';
 
-describe('TablerosService', () => {
-  let service: TablerosService;
+describe('SisconfigService', () => {
+  let service: SysConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TablerosService],
+      providers: [SysConfigService],
     }).compile();
 
-    service = module.get<TablerosService>(TablerosService);
+    service = module.get<SysConfigService>(SysConfigService);
   });
 
   it('should be defined', () => {

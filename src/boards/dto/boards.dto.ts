@@ -1,7 +1,7 @@
 import { IsString, IsNotEmpty, IsOptional } from "class-validator";
 import { tableroType } from "./tableroType.enum";
 
-export class TableroDTO{
+export class BoardDTO{
     @IsString()
     name: string;
 

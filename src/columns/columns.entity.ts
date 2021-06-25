@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { TablerosI } from '../tableros/tableros.entity';
+import { Board } from '../boards/boards.entity';
 import { TareasI } from '../tareas/tareas.entity';
 
 @Entity()
@@ -10,8 +10,8 @@ export class ColumnI extends BaseEntity{
     @Column()
     name: string;
 
-    @ManyToOne(()=> TablerosI, tablero => tablero.columns)
-    Tablero: TablerosI;
+    @ManyToOne(()=> Board, tablero => tablero.columns)
+    Tablero: Board;
     
     @OneToMany(() => TareasI, tareas => tareas.column )
     Tareas: TareasI;
