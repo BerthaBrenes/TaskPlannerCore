@@ -7,7 +7,7 @@ import { AuthCredentialDTO } from './dto/auth-credentials.dto';
 @Injectable()
 export class AuthService {
 
-    private daticUrl = 'http://localhost:8080/datic/api/auth';
+    private daticUrl = process.env.DATIC_URL || 'http://localhost:8080/datic/api/auth';
 
     constructor(
         @InjectRepository(UserRepository)
@@ -29,6 +29,21 @@ export class AuthService {
             throw new UnauthorizedException('There is no user registered to this email');
 
         return this.consultDatic(credentials);
+    }
+
+    /**
+     * 
+     * @param email 
+     */
+    async signUp(credentials: AuthCredentialDTO): Promise<any> {
+        const email = credentials.email;
+        const user = await this.userRepository.findOne({email: email});
+
+        if (user)
+            throw new UnauthorizedException('The user already has a registered account');
+        
+        const response = await this.consultDatic(credentials);
+        return { email: response['email'], role: response['role']};
     }
 
 
