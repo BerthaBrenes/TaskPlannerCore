@@ -1,5 +1,4 @@
 import { Body, Controller, Logger, Post, ValidationPipe } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCredentialDTO } from './dto/auth-credentials.dto';
 
@@ -12,11 +11,17 @@ export class AuthController {
         private authService: AuthService
     ) { }
     
-    
+
     @Post('/login')
     logIn(@Body(ValidationPipe) credentials: AuthCredentialDTO): Promise<any> {
         this.logger.verbose(`LogIn attempt with identity: ${JSON.stringify(credentials.email)}`);
         return this.authService.logIn(credentials);
+    }
+
+    @Post('/signup')
+    signUp(@Body(ValidationPipe) credentials: AuthCredentialDTO): Promise<any> {
+        this.logger.verbose(`Check if it is possible to register the user: ${JSON.stringify(credentials.email)}`);
+        return this.authService.signUp(credentials);
     }
 
 
