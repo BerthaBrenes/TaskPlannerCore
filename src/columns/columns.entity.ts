@@ -10,9 +10,7 @@ export class ColumnI extends BaseEntity{
     @Column()
     name: string;
 
-    @ManyToOne(()=> Board, tablero => tablero.columns)
     Tablero: Board;
     
-    @OneToMany(() => TareasI, tareas => tareas.column )
     Tareas: TareasI;
 }

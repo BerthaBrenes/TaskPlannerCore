@@ -56,8 +56,8 @@ export class SysConfigService {
         if(!found){
             throw new NotFoundException();
         }
-        found.tableroType = type;
-        return await found.save();
+        //found.tableroType = type;
+        //return await found.save();
     }
     /**
      * Set the url of the profile photo
@@ -69,7 +69,7 @@ export class SysConfigService {
         if(!found){
             throw new NotFoundException();
         }
-        found.profilePhotos = url;
-        return await found.save();
+        //found.profilePhotos = url;
+        //return await found.save();
     }
 }

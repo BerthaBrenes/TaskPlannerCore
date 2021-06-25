@@ -21,3 +21,13 @@ export enum UserType{
     STUDENT = "STUDENT",
     ADMIN = "ADMIN"
 }
+
+export enum Province {
+    SJ = "San Jose",
+    AL = "Alajuela",
+    CA = "Cartago",
+    HE = "Heredia",
+    GU = "Guanacaste",
+    PU = "Puntarenas",
+    LI = "Limon"
+}

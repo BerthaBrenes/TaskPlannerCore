@@ -25,6 +25,5 @@ export class TareasI extends BaseEntity{
     @Column()
     dependency: string[];
 
-    @ManyToOne(() => ColumnI, column => column.Tareas)
     column: ColumnI;
 }
