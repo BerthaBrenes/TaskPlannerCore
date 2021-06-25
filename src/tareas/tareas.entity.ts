@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryColumn, Column, ManyToOne } from "typeorm";
-import { ColumnI } from "src/columns/columns.entity";
+import { ColumnI } from "../columns/columns.entity";
 import { priorityType } from "./dto/priorityType.enum";
 
 @Entity()

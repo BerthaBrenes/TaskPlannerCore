@@ -68,13 +68,8 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        found.Name_1 = data.Name_1;
-        found.Name_2 = data.Name_2;
-        found.Lastname_1 = data.Lastname_1;
-        found.Lastname_2 = data.Lastname_2;
+        found.name = data.Name;
         found.career = data.career;
-        found.canton = data.canton;
-        found.district = data.district;
         found.province_living = data.province_living;
         found.profile_photo = data.profile_photo;
         return await found.save()
@@ -89,13 +84,8 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        found.Name_1 = data.Name_1;
-        found.Name_2 = data.Name_2;
-        found.Lastname_1 = data.Lastname_1;
-        found.Lastname_2 = data.Lastname_2;
+        found.name = data.Name;
         found.career = data.career;
-        found.canton = data.canton;
-        found.district = data.district;
         found.province_residence = data.province_residence;
         found.profile_photo = data.profile_photo;
         return await found.save();
@@ -121,7 +111,7 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        found.Friends.push(friends);
+        found.friends.push(friends);
         return await found.save();
     }
     /**
@@ -134,8 +124,8 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        const index = found.Friends.findIndex((element) => element === idF);
-        found.Friends.splice(index, 1);
+        const index = found.friends.findIndex((element) => element === idF);
+        found.friends.splice(index, 1);
         return await found.save();
 
     }
@@ -149,7 +139,7 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        found.Tableros_Owner.push(idT);
+        found.my_boards.push(idT);
         return await found.save();
     }
     /**
@@ -162,8 +152,8 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        const index = found.Tableros_Owner.findIndex((element) => element === idT);
-        found.Tableros_Owner.splice(index, 1);
+        const index = found.my_boards.findIndex((element) => element === idT);
+        found.my_boards.splice(index, 1);
         return await found.save();
 
     }
@@ -177,8 +167,8 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        const index = found.Tableros_Friend.findIndex((element) => element === idT);
-        found.Tableros_Friend.splice(index, 1);
+        const index = found.shared_boards.findIndex((element) => element === idT);
+        found.shared_boards.splice(index, 1);
         return await found.save();
 
     }
@@ -192,7 +182,7 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException(`User with the id ${id} not found`);
         }
-        found.Tableros_Friend.push(idT);
+        found.shared_boards.push(idT);
         return await found.save();
     }
     /**

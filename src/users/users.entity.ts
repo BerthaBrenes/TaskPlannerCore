@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { BaseEntity, Entity, Column, ObjectIdColumn } from "typeorm";
 import { userType } from "./dto/userType.enum";
 import { hobbies } from "./dto/hobbies.enum";
 import { applications } from "./dto/applications.enum";
@@ -6,32 +6,20 @@ import { applications } from "./dto/applications.enum";
 @Entity()
 export class UserI extends BaseEntity{
 
-    @PrimaryColumn()
+    @ObjectIdColumn()
     id:string;
 
     @Column()
-    Name_1: string;
-
-    @Column()
-    Name_2: string;
-  
-    @Column()
-    Lastname_1: string;
-
-    @Column()
-    Lastname_2: string;
+    name: string;
 
     @Column()
     email: string;
 
     @Column()
-    password: string
+    dni: string
 
     @Column()
-    dmi: string
-
-    @Column()
-    license: string
+    license?: string
 
     @Column()
     career: string
@@ -40,34 +28,28 @@ export class UserI extends BaseEntity{
     province_residence: string
 
     @Column()
-    canton: string;
-
-    @Column()
-    district: string;
-
-    @Column()
     province_living: string;
 
     @Column()
-    profile_photo: string;
+    profile_photo?: string;
 
     @Column()
     type: userType;
 
     @Column()
-    application: applications[];
+    application?: applications[];
 
     @Column()
-    hobbies: hobbies[];
+    hobbies?: hobbies[];
 
     @Column()
-    Tableros_Owner: string[];
+    my_boards?: string[];
 
     @Column()
-    Tableros_Friend: string[];
+    shared_boards?: string[];
 
     @Column()
-    Friends: string[];
+    friends?: string[];
     
 
 }

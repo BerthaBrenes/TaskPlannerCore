@@ -5,7 +5,4 @@ export class adminDTO{
     @IsNotEmpty()
     email: string;
 
-    @IsString()
-    @IsNotEmpty()
-    password: string
 }

@@ -3,12 +3,19 @@ import { TareasRepository } from './tareas.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { tareasDTO } from './dto/tareas.dto';
 import { priorityType } from './dto/priorityType.enum';
+import { CriticalPath } from 'src/tools/criticalpath';
 
 @Injectable()
 export class TareasService {
     constructor(@InjectRepository(TareasRepository)
     private tareasRepository: TareasRepository) { }
-
+    // TODO: The implementation of the critical path calculation looks like this
+    /**
+     * Critical path
+     */
+    getCriticalPath(){
+        CriticalPath.getCriticalPath([]);
+    }
     /**
      * Create a new tarea
      * @param data of the tareas
