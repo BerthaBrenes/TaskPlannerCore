@@ -11,11 +11,8 @@ export class Board extends BaseEntity{
     @Column()
     name: string;
 
-    @ManyToOne(() => User, user => user.id)
     owner: User;
     
-    @ManyToMany(() => User)
-    @JoinTable()
     friends: User[];
 
     @Column()
@@ -24,6 +21,5 @@ export class Board extends BaseEntity{
     @Column()
     description: string;
 
-    @OneToMany(() => ColumnI, column => column.Tablero)
     columns: ColumnI;
 }
