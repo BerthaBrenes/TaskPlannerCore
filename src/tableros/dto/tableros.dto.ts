@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional } from "class-validator";
+import { tableroType } from "./tableroType.enum";
 
 export class TableroDTO{
     @IsString()
@@ -11,7 +12,7 @@ export class TableroDTO{
     friends: any;
 
     @IsString()
-    type: string;
+    type: tableroType;
 
     @IsString()
     description: string;
