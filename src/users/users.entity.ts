@@ -1,13 +1,10 @@
 import { BaseEntity, Entity, Column, ObjectIdColumn } from "typeorm";
-import { userType } from "./dto/userType.enum";
-import { hobbies } from "./dto/hobbies.enum";
-import { applications } from "./dto/applications.enum";
 
 @Entity()
-export class UserI extends BaseEntity{
+export class User extends BaseEntity{
 
     @ObjectIdColumn()
-    id:string;
+    id: string;
 
     @Column()
     name: string;
@@ -16,40 +13,11 @@ export class UserI extends BaseEntity{
     email: string;
 
     @Column()
-    dni: string
+    role: UserType;
+}
 
-    @Column()
-    license?: string
-
-    @Column()
-    career: string
-
-    @Column()
-    province_residence: string
-
-    @Column()
-    province_living: string;
-
-    @Column()
-    profile_photo?: string;
-
-    @Column()
-    type: userType;
-
-    @Column()
-    application?: applications[];
-
-    @Column()
-    hobbies?: hobbies[];
-
-    @Column()
-    my_boards?: string[];
-
-    @Column()
-    shared_boards?: string[];
-
-    @Column()
-    friends?: string[];
-    
-
+export enum UserType{
+    PROFESSOR = "PROFESSOR",
+    STUDENT = "STUDENT",
+    ADMIN = "ADMIN"
 }

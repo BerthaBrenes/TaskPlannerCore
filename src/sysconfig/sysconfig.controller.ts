@@ -1,35 +1,36 @@
 import { Controller, OnApplicationShutdown, Post, UsePipes, ValidationPipe, Body, Logger, Get, Param, Delete, Put } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiResponse, ApiNotFoundResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
-import { SisconfigService } from './sisconfig.service';
-import { sisconfigDTO } from './dto/sisconfig.dto';
-import { tableroType } from 'src/tableros/dto/tableroType.enum';
+import { SysConfigService } from './sysconfig.service';
+import { SysConfigDTO } from './dto/sysconfig.dto';
+import { tableroType } from 'src/boards/dto/tableroType.enum';
 
 @ApiTags('System Configuration')
-@Controller('sisconfig')
-export class SisconfigController implements OnApplicationShutdown {
+@Controller('config')
+export class SysConfigController implements OnApplicationShutdown {
   /**
       * Variable for the logger
       */
-  private logger: Logger = new Logger('Sis Controller');
+  private logger: Logger = new Logger('Sys Controller');
   /**
    * First method in the constructor
    * @param sisconfigService Controller for the service
    */
-  constructor(private readonly sisconfigService: SisconfigService) { }
+  constructor(private readonly sisconfigService: SysConfigService) { }
 
   /**
    * Create a new config system
    * @param data of the request
    */
   @Post()
-  @ApiBody({ required: true, type: sisconfigDTO })
+  @ApiBody({ required: true, type: SysConfigDTO })
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Create a new config system' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: sisconfigDTO) {
+  async createColumn(@Body() data: SysConfigDTO) {
     this.logger.verbose(`Create a config`);
     return await this.sisconfigService.CreateConfig(data);
   }
+
   /**
      * Get the system configuration
      * @param id of the user
@@ -44,6 +45,7 @@ export class SisconfigController implements OnApplicationShutdown {
     this.logger.verbose(`get a system config ${id}`);
     return await this.sisconfigService.getConfig(id);
   }
+
   /**
    * Delete a config by the user
    * @param id of the column

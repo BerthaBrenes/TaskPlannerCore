@@ -1,16 +1,16 @@
 import { Repository, EntityRepository } from "typeorm";
-import { TablerosI } from "./tableros.entity";
-import { TableroDTO } from "./dto/tableros.dto";
+import { Board } from "./boards.entity";
+import { BoardDTO } from "./dto/boards.dto";
 
-@EntityRepository(TablerosI)
-export class TableroRepository extends Repository<TablerosI>{
+@EntityRepository(Board)
+export class BoardsRepository extends Repository<Board>{
     /**
      * Create a tablero
      * @param data of the tablero
      */
-    async createTablero(data: TableroDTO){
+    async createTablero(data: BoardDTO){
         const { columns, description, friends, name, owner, type} = data;
-        const tablero = new TablerosI();
+        const tablero = new Board();
         tablero.columns = columns;
         tablero.description = description;
         tablero.friends = friends;

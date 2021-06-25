@@ -1,21 +1,21 @@
 import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
-import { TableroRepository } from './tableros.repository';
+import { BoardsRepository } from './boards.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TableroDTO } from './dto/tableros.dto';
+import { BoardDTO } from './dto/boards.dto';
 
 @Injectable()
-export class TablerosService {
+export class BoardsService {
 
     constructor(
-        @InjectRepository(TableroRepository)
-        private tableroRepo: TableroRepository
+        @InjectRepository(BoardsRepository)
+        private tableroRepo: BoardsRepository
     ) { }
 
     /**
      * Create a new tablero
      * @param data of the tablero
      */
-    async createTablero(data: TableroDTO) {
+    async createTablero(data: BoardDTO) {
         const found = await this.tableroRepo.findOne({ where: { name: data.name } });
         if (found) {
             throw new ConflictException(`The tablero with the name ${data.name} already exist`);
@@ -38,7 +38,7 @@ export class TablerosService {
      * @param id of the tablero
      * @param data to update the tablero
      */
-    async updateTablero(id: string, data: TableroDTO) {
+    async updateTablero(id: string, data: BoardDTO) {
         const found = await this.tableroRepo.findOne(id);
         if (!found) {
             throw new NotFoundException(`The tablero with the id ${id} not found`);

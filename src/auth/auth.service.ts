@@ -16,9 +16,9 @@ export class AuthService {
     ) { }
     
     /**
-     * 
-     * @param credentials 
-     * @returns 
+     * Performs authentication of a user so that it can log in to the system.
+     * @param credentials User authentication credentials.
+     * @returns A promise with authentication information.
      */
     async logIn(credentials: AuthCredentialDTO): Promise<any> {
         
@@ -31,9 +31,12 @@ export class AuthService {
         return this.consultDatic(credentials);
     }
 
+
     /**
-     * 
-     * @param email 
+     * Performs pre-authentication of a user's credentials to determine if they 
+     * can sign up to the system.
+     * @param credentials User authentication credentials.
+     * @returns A promise with authentication information. 
      */
     async signUp(credentials: AuthCredentialDTO): Promise<any> {
         const email = credentials.email;
@@ -48,9 +51,9 @@ export class AuthService {
 
 
     /**
-     * 
-     * @param credentials 
-     * @returns 
+     * Performs the procedure of connecting to DATIC resources to authenticate a user's credentials.
+     * @param credentials User authentication credentials.
+     * @returns A promise with authentication information. 
      */
     async consultDatic(credentials: AuthCredentialDTO): Promise<any> {
         const response = await this.http.post(this.daticUrl, credentials)

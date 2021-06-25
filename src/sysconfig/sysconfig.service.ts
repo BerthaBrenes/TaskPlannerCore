@@ -1,20 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { SisConfigRepository } from './sisconfig.repository';
+import { SysConfigRepository } from './sysconfig.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { sisconfigDTO } from './dto/sisconfig.dto';
-import { tableroType } from 'src/tableros/dto/tableroType.enum';
+import { SysConfigDTO } from './dto/sysconfig.dto';
+import { tableroType } from 'src/boards/dto/tableroType.enum';
 /**
  * Injectable
  */
 @Injectable()
-export class SisconfigService {
+export class SysConfigService {
     /**
      * First method in the service
      * @param sisconfigRepository Controller for the repo
      */
     constructor(
-        @InjectRepository(SisConfigRepository)
-        private sisconfigRepository: SisConfigRepository
+        @InjectRepository(SysConfigRepository)
+        private sisconfigRepository: SysConfigRepository
     ){}
 
     /**
@@ -32,7 +32,7 @@ export class SisconfigService {
      * Create a new config system
      * @param data of the config
      */
-    async CreateConfig(data: sisconfigDTO){
+    async CreateConfig(data: SysConfigDTO){
         return await this.sisconfigRepository.createConfig(data);
     }
     /**

@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TablerosController } from './tableros.controller';
+import { SysConfigController } from './sysconfig.controller';
 
-describe('TablerosController', () => {
-  let controller: TablerosController;
+describe('SisconfigController', () => {
+  let controller: SysConfigController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [TablerosController],
+      controllers: [SysConfigController],
     }).compile();
 
-    controller = module.get<TablerosController>(TablerosController);
+    controller = module.get<SysConfigController>(SysConfigController);
   });
 
   it('should be defined', () => {

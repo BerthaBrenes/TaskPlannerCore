@@ -3,23 +3,28 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TablerosModule } from './tableros/tableros.module';
+import { BoardsModule } from './boards/boards.module';
 import { TareasModule } from './tareas/tareas.module';
 import { ColumnsModule } from './columns/columns.module';
 import { AuthModule } from './auth/auth.module';
 import { RequestModule } from './request/request.module';
 import { UsersModule } from './users/users.module';
-import { SisconfigModule } from './sisconfig/sisconfig.module';
+import { SisconfigModule } from './sysconfig/sysconfig.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ToolsModule } from './tools/tools.module';
+import { StudentsModule } from './students/students.module';
+import { ProfessorsModule } from './professors/professors.module';
+import { AdminsModule } from './admins/admins.module';
+import { FriendRequestModule } from './friend-request/friend-request.module';
+import { CollaborationRequestModule } from './collaboration-request/collaboration-request.module';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),
-    TablerosModule,
+    BoardsModule,
     TareasModule,
     ColumnsModule,
     AuthModule,
@@ -27,7 +32,12 @@ import { ToolsModule } from './tools/tools.module';
     UsersModule,
     SisconfigModule,
     TypeOrmModule.forRoot(typeOrmConfig),
-    ToolsModule
+    ToolsModule,
+    StudentsModule,
+    ProfessorsModule,
+    AdminsModule,
+    FriendRequestModule,
+    CollaborationRequestModule
   
   ],
   controllers: [AppController],
