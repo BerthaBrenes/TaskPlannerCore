@@ -34,29 +34,29 @@ export class SisconfigController implements OnApplicationShutdown {
      * Get the system configuration
      * @param id of the user
      */
-    @Get('/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'user id not found' })
-    @ApiOperation({ summary: 'Get the system configuration' })
-    @UsePipes(ValidationPipe)
-    async getColumns(@Param('id') id: string) {
-        this.logger.verbose(`get a system config ${id}`);
-        return await this.sisconfigService.getConfig(id);
-    }
-    /**
-     * Delete a config by the user
-     * @param id of the column
-     */
-    @Delete('/:id')
-    @ApiParam({ name: 'id' })
-    @ApiOperation({ summary: 'Delete a config by the user' })
-    @ApiNotFoundResponse({ description: 'config id not found' })
-    @ApiResponse({ status: 201 })
-    @UsePipes(ValidationPipe)
-    async deleteColumn(@Param('id') id : string){
-      return this.sisconfigService.deleteConfig(id);
-    }
+  @Get('/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'user id not found' })
+  @ApiOperation({ summary: 'Get the system configuration' })
+  @UsePipes(ValidationPipe)
+  async getColumns(@Param('id') id: string) {
+    this.logger.verbose(`get a system config ${id}`);
+    return await this.sisconfigService.getConfig(id);
+  }
+  /**
+   * Delete a config by the user
+   * @param id of the column
+   */
+  @Delete('/:id')
+  @ApiParam({ name: 'id' })
+  @ApiOperation({ summary: 'Delete a config by the user' })
+  @ApiNotFoundResponse({ description: 'config id not found' })
+  @ApiResponse({ status: 201 })
+  @UsePipes(ValidationPipe)
+  async deleteColumn(@Param('id') id: string) {
+    return this.sisconfigService.deleteConfig(id);
+  }
 
   /**
    * Add a type of the tablero in config

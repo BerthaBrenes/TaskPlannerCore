@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { TableroRepository } from './tableros.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TableroDTO } from './dto/tableros.dto';
@@ -28,8 +28,8 @@ export class TablerosService {
      */
     async deleteTablero(id: string) {
         const found = await this.tableroRepo.findOne(id);
-        if (found) {
-            throw new ConflictException(`The tablero with the id ${id} not found`);
+        if (!found) {
+            throw new NotFoundException(`The tablero with the id ${id} not found`);
         }
         return await this.tableroRepo.delete(id);
     }
@@ -40,8 +40,8 @@ export class TablerosService {
      */
     async updateTablero(id: string, data: TableroDTO) {
         const found = await this.tableroRepo.findOne(id);
-        if (found) {
-            throw new ConflictException(`The tablero with the id ${id} not found`);
+        if (!found) {
+            throw new NotFoundException(`The tablero with the id ${id} not found`);
         }
         found.columns = data.columns;
         found.description = data.description;
@@ -56,8 +56,8 @@ export class TablerosService {
      */
     async getTByOwner(id: string) {
         const found = await this.tableroRepo.findOne({where: {owner: id}});
-        if (found) {
-            throw new ConflictException(`The tablero with the owner id ${id} not found`);
+        if (!found) {
+            throw new NotFoundException(`The tablero with the owner id ${id} not found`);
         }
         return found;
     }
@@ -67,8 +67,8 @@ export class TablerosService {
      */
     async getColumns(id: string) {
         const found = await this.tableroRepo.findOne(id);
-        if (found) {
-            throw new ConflictException(`The tablero with the id ${id} not found`);
+        if (!found) {
+            throw new NotFoundException(`The tablero with the id ${id} not found`);
         }
         found.columns;
     }

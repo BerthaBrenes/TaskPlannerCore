@@ -93,7 +93,7 @@ export class TareasController implements OnApplicationShutdown{
    * @param id of tarea
    * @param dependency id of another tareas that has dependency
    */
-  @Put('/:id/:dependency')
+  @Put('Dependency/:id/:dependency')
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: ' Add a type of the tablero in config' })
   @ApiNotFoundResponse({ description: 'user id not found' })
@@ -107,7 +107,7 @@ export class TareasController implements OnApplicationShutdown{
    * @param id of the tarea
    * @param idColumn of the column
    */
-  @Put('/:id/:column')
+  @Put('Column/:id/:column')
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: 'Change the column of a tarea' })
   @ApiNotFoundResponse({ description: 'user id not found' })
@@ -121,7 +121,7 @@ export class TareasController implements OnApplicationShutdown{
    * @param id of tarea
    * @param dependency of the tarea
    */
-  @Put('/:id/:priority')
+  @Put('Priority/:id/:priority')
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: ' Change the priority of the tarea' })
   @ApiNotFoundResponse({ description: 'tarea id not found' })

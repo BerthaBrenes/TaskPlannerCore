@@ -72,6 +72,21 @@ export class UsersController implements OnApplicationShutdown {
   async updateTarea(@Param('id') id: string, @Body() data: userDTO) {
     return this.userService.updateStudent(id, data);
   }
+  
+  /**
+   * Validate the email of the user exist
+   * @param email of the person
+   */
+  @Get('validate/:email')
+  @ApiParam({ name: 'email' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'owner id not found' })
+  @ApiOperation({ summary: 'Get the system configuration' })
+  @UsePipes(ValidationPipe)
+  async getTareasByOwmer(@Param('email') email: string) {
+    this.logger.verbose(`Get the tareas by the owner ${email}`);
+    return await this.userService.validateUser(email);
+  }
   /**
    * update the professor data
    * @param id of the user
@@ -88,25 +103,11 @@ export class UsersController implements OnApplicationShutdown {
     return this.userService.updateProfessor(id, data);
   }
   /**
-   * Validate the email of the user exist
-   * @param email of the person
-   */
-  @Get('validate/:email')
-  @ApiParam({ name: 'email' })
-  @ApiResponse({ status: 200 })
-  @ApiNotFoundResponse({ description: 'owner id not found' })
-  @ApiOperation({ summary: 'Get the system configuration' })
-  @UsePipes(ValidationPipe)
-  async getTareasByOwmer(@Param('email') email: string) {
-    this.logger.verbose(`Get the tareas by the owner ${email}`);
-    return await this.userService.validateUser(email);
-  }
-  /**
      * Add new friends to the current list
      * @param id of the user
      * @param data of the professor
      */
-  @Patch('professor/:id')
+  @Patch('friends/:id')
   @ApiParam({ name: 'id' })
   @ApiBody({ required: true })
   @ApiOperation({ summary: 'Add new friends to the current list' })
