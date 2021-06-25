@@ -11,7 +11,7 @@ import { Node } from "./node";
  */
 export class CriticalPath {
 
-    private static graph: Graph = new Graph();
+    private static graph: Graph;
 
     /**
      * Calculates the critical path of a project given its tasks.
@@ -21,6 +21,7 @@ export class CriticalPath {
     static getCriticalPath(tasks: TareasI[]): string[] {
         
         // Graph building
+        this.graph = new Graph();
         this.buildGraph(tasks);
         this.connectGraph(tasks);
         
