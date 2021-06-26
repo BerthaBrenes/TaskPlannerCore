@@ -30,7 +30,7 @@ export class BoardsController implements OnApplicationShutdown {
     return await this.tableroService.createBoard(data);
   }
   /**
-    * Delete the Board
+    * Delete the board
     * @param id of the column
     */
   @Delete('/:id')
