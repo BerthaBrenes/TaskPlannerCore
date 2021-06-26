@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
-import { statusType } from "src/request/dto/statusType.enum";
+import { StatusType } from "src/data/statusType.enum";
 
 @Entity()
 export class CollaborationRequest extends BaseEntity{
@@ -16,5 +16,5 @@ export class CollaborationRequest extends BaseEntity{
     board: string;
     
     @Column()
-    status: statusType
+    status: StatusType
 }

@@ -41,7 +41,6 @@ export class StudentsService {
         return found;
     }
 
-
     async deleteProfile(id: string): Promise<Student> {
         const found = await this.stdRepository.findOne(id);
         if (!found) {
@@ -66,6 +65,13 @@ export class StudentsService {
         found.provinceOfProvenance = data.provinceOfProvenance;
         found.avatarUrl = data.avatarUrl;
 
+        return found.save();
+    }
+
+    
+    async addFriend(id: string, friendId: string) {
+        const found = await this.stdRepository.findOne(id);
+        found.friends.push(friendId);
         return found.save();
     }
 }

@@ -1,77 +1,46 @@
-import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Put, Param, Get } from '@nestjs/common';
+import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Param, Get, Patch } from '@nestjs/common';
 import { CollaborationRequestService } from './collaboration-request.service';
-import { collaborationRequestDTO } from './dto/collaboration-request.dto';
-import { ApiBody, ApiResponse, ApiNotFoundResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
-import { statusType } from 'src/request/dto/statusType.enum';
+import { CollaborationRequestDTO } from './dto/collaboration-request.dto';
+import { StatusType } from 'src/data/statusType.enum';
 
-@Controller('collaboration-request')
+@Controller('collab')
 export class CollaborationRequestController implements OnApplicationShutdown {
 
-    /**
-    * Variable for the logger
-    */
-    private logger: Logger = new Logger('ColumnController');
-    /**
-       * First method in the component
-       * @param requesService service request
-       */
-    constructor(private readonly requesService: CollaborationRequestService) { }
-    /**
-     * Create a new request
-     * @param data of the request
-     */
+    private logger: Logger = new Logger('Collaboration Controller');
+
+    constructor(private readonly service: CollaborationRequestService) { }
+    
+
     @Post()
-    @ApiBody({ required: true, type: collaborationRequestDTO })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'tablero id not found' })
-    @ApiOperation({ summary: 'Create a new request' })
     @UsePipes(ValidationPipe)
-    async createColumn(@Body() data: collaborationRequestDTO) {
+    async createColumn(@Body() data: CollaborationRequestDTO) {
         this.logger.verbose(`Create a request`);
-        return await this.requesService.createRequest(data);
+        return await this.service.createRequest(data);
     }
-    /**
-   * Change a new status in the request
-   * @param id of the request
-   * @param status status of the request
-   */
-    @Put('/:id/:status')
-    @ApiParam({ name: 'id' })
-    @ApiOperation({ summary: 'Change a new status in the request' })
-    @ApiNotFoundResponse({ description: 'request id not found' })
-    @ApiResponse({ status: 201 })
+    
+    
+    @Patch('/:id/:status')
     @UsePipes(ValidationPipe)
-    async changeStatus(@Param('id') id: string, @Param('status') status: statusType) {
-        return this.requesService.setStatus(id, status);
+    async changeStatus(@Param('id') id: string, @Param('status') status: StatusType) {
+        return this.service.resolveRequest(id, status);
     }
-    /**
-   * Get the request
-   * @param id of the user from the request is
-   */
-    @Get('FromUser/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'request id not found' })
-    @ApiOperation({ summary: 'Get the request' })
+    
+    
+    @Get('sent/:id')
     @UsePipes(ValidationPipe)
-    async getRequestFrom(@Param('id') id: string) {
-        this.logger.verbose(`Get the request ${id}`);
-        return await this.requesService.getRequestByFrom(id);
+    async getSentRequests(@Param('id') id: string) {
+        this.logger.verbose(`Get the sent requests of ${id}`);
+        return await this.service.getSentRequests(id);
     }
-    /**
-     * Get the request
-     * @param id of the tablero
-     */
-    @Get('ToUser/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'request id not found' })
-    @ApiOperation({ summary: 'Get the request' })
+    
+    
+    @Get('received/:id')
     @UsePipes(ValidationPipe)
-    async getRequestBy(@Param('id') id: string) {
-        this.logger.verbose(`Get the request ${id}`);
-        return await this.requesService.getRequestBy(id);
+    async getReceivedRequests(@Param('id') id: string) {
+        this.logger.verbose(`Get the received request of ${id}`);
+        return await this.service.getReceivedRequests(id);
     }
+
     /**
    * shutdown the process
    * @param signal event
