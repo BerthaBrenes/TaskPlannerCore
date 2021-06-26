@@ -4,6 +4,7 @@ import { FriendRequestRepository } from './friend.request.repository';
 import { RequestDTO } from './dto/friend-request.dto';
 import { StatusType } from 'src/data/statusType.enum';
 import { StudentRepository } from 'src/students/students.repository';
+import { FriendRequest } from './friend.request.entity';
 
 @Injectable()
 export class FriendRequestService {
@@ -47,15 +48,7 @@ export class FriendRequestService {
             throw new NotFoundException(`Request with the id ${id} not found`);
         }
 
-        const friendList = [];
-
-        for await (const f of found){
-            const from = await (await this.stdRepository.findOne(f.from)).name;
-            const to = await (await this.stdRepository.findOne(f.to)).name;
-            friendList.push({from: from, to: to, status: f.status});
-        }
-
-        return friendList;
+        return this.getFriendsList(found);
     }
 
     async getReceivedRequests(id: string) {
@@ -63,7 +56,20 @@ export class FriendRequestService {
         if (!found) {
             throw new NotFoundException(`Request with the id ${id} not found`)
         }
-        return found;
+        return this.getFriendsList(found);;
+    }
+    
+
+    async getFriendsList(requests: FriendRequest[]): Promise<any[]> {
+        const friendList = [];
+
+        for await (const r of requests){
+            const from = await (await this.stdRepository.findOne(r.from)).name;
+            const to = await (await this.stdRepository.findOne(r.to)).name;
+            friendList.push({from: from, to: to, status: r.status});
+        }
+
+        return friendList;
     }
 
 }
