@@ -1,4 +1,4 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, Logger } from '@nestjs/common';
 import { BoardsRepository } from './boards.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardDTO } from './dto/boards.dto';
@@ -38,16 +38,13 @@ export class BoardsService {
      * @param id of the tablero
      * @param data to update the tablero
      */
-    async updateTablero(id: string, data: BoardDTO) {
+    async updateTablero(id: string, data: {description, name}) {
         const found = await this.tableroRepo.findOne(id);
         if (!found) {
             throw new NotFoundException(`The tablero with the id ${id} not found`);
         }
-        found.columns = data.columns;
         found.description = data.description;
         found.name = data.name;
-        found.owner = data.owner;
-        found.type = data.type;
         return found.save();
      }
     /**
@@ -56,6 +53,7 @@ export class BoardsService {
      */
     async getTByOwner(id: string) {
         const found = await this.tableroRepo.findOne({where: {owner: id}});
+        Logger.verbose('get the board of the owner')
         if (!found) {
             throw new NotFoundException(`The tablero with the owner id ${id} not found`);
         }
