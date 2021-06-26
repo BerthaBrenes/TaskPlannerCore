@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
+import { EditStudentDto } from './dto/edit-student.dto';
 import { Student } from './students.entity';
 import { StudentsService } from './students.service';
 
@@ -31,5 +32,10 @@ export class StudentsController {
         return this.service.deleteProfile(id);
     }
 
-    
+    @Patch('/:id')
+    @UsePipes(ValidationPipe)
+    editProfile(@Param('id') id: string, @Body() data: EditStudentDto): Promise<Student> {
+        this.logger.verbose(`Edit user's ${id} profile data`);
+        return this.service.editProfile(id,data);
+    }    
 }
