@@ -1,9 +1,9 @@
-import { Repository, EntityRepository } from "typeorm";
+import { Repository, EntityRepository, MongoRepository } from "typeorm";
 import { Board } from "./boards.entity";
 import { BoardDTO } from "./dto/boards.dto";
 
 @EntityRepository(Board)
-export class BoardsRepository extends Repository<Board>{
+export class BoardsRepository extends MongoRepository<Board>{
     /**
      * Create a tablero
      * @param data of the tablero
@@ -17,6 +17,7 @@ export class BoardsRepository extends Repository<Board>{
         tablero.name = name;
         tablero.owner = owner;
         tablero.type = type;
+        tablero.creationDate = new Date();
         return await tablero.save();
     }
 }

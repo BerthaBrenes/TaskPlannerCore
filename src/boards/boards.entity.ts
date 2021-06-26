@@ -22,4 +22,7 @@ export class Board extends BaseEntity{
     description: string;
 
     columns: ColumnI[];
+
+    @Column()
+    creationDate: Date;
 }

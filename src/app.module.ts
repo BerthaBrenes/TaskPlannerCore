@@ -17,6 +17,7 @@ import { ProfessorsModule } from './professors/professors.module';
 import { AdminsModule } from './admins/admins.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 import { CollaborationRequestModule } from './collaboration-request/collaboration-request.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { CollaborationRequestModule } from './collaboration-request/collaboratio
     ProfessorsModule,
     AdminsModule,
     FriendRequestModule,
-    CollaborationRequestModule
+    CollaborationRequestModule,
+    StatisticsModule
   
   ],
   controllers: [AppController],
