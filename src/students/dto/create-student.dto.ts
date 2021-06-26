@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString, Matches } from "class-validator";
-import { Province } from "src/users/users.entity";
+import { Province } from "../../data/province.enum";
 
 export class CreateStudentDto {
 

@@ -1,4 +1,4 @@
-import { EntityRepository, MongoError, MongoRepository } from "typeorm";
+import { EntityRepository, MongoRepository } from "typeorm";
 import { CreateStudentDto } from "./dto/create-student.dto";
 import { Student } from "./students.entity";
 

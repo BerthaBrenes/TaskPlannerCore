@@ -1,4 +1,4 @@
-import { Province } from "src/users/users.entity";
+import { Province } from "../data/province.enum";
 import { BaseEntity, Column, Entity, ObjectIdColumn } from "typeorm";
 
 @Entity()
