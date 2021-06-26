@@ -15,12 +15,12 @@ export class BoardsService {
      * Create a new tablero
      * @param data of the tablero
      */
-    async createTablero(data: BoardDTO) {
+    async createBoard(data: BoardDTO) {
         const found = await this.tableroRepo.findOne({ where: { name: data.name } });
         if (found) {
             throw new ConflictException(`The tablero with the name ${data.name} already exist`);
         }
-        return await this.tableroRepo.createTablero(data);
+        return await this.tableroRepo.createBoard(data);
     }
     /**
      * Delete the tablero
