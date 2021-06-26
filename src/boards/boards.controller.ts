@@ -17,17 +17,17 @@ export class BoardsController implements OnApplicationShutdown {
    */
   constructor(private readonly tableroService: BoardsService) { }
   /**
- * Create a new tablero
+ * Create a new board
  * @param data of the request
  */
   @Post()
   @ApiBody({ required: true, type: BoardDTO })
   @ApiResponse({ status: 200 })
-  @ApiOperation({ summary: 'Create a new tablero' })
+  @ApiOperation({ summary: 'Create a new board' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: BoardDTO) {
-    this.logger.verbose(`Create a new tablero`);
-    return await this.tableroService.createTablero(data);
+  async createNewBoard(@Body() data: BoardDTO) {
+    this.logger.verbose(`Create a new board`);
+    return await this.tableroService.createBoard(data);
   }
   /**
     * Delete the tablero
