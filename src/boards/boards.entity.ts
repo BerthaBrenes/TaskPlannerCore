@@ -1,25 +1,27 @@
-import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { ColumnI } from "../columns/columns.entity";
-import { User } from "../users/users.entity";
-import { tableroType } from "./dto/tableroType.enum";
+import { BaseEntity, Entity, Column, ObjectIdColumn } from "typeorm";
 
 @Entity()
 export class Board extends BaseEntity{
-    @PrimaryColumn()
+    @ObjectIdColumn()
     id: string;
 
     @Column()
     name: string;
 
-    owner: User;
+    @Column()
+    owner: string;
     
-    friends: User[];
+    //friends: User[];
 
     @Column()
-    type: tableroType;
+    type: string;
 
     @Column()
     description: string;
 
-    columns: ColumnI[];
+    @Column()
+    columns: string[];
+
+    @Column()
+    creationDate: string;
 }

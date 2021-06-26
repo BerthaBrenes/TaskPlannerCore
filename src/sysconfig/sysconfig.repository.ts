@@ -16,7 +16,7 @@ export class SysConfigRepository extends Repository<SysConfig>{
         config.systemUses = data.systemUses;
         config.hobbies = data.hobbies;
         config.avatars = data.avatars;
-        config.date = Date.now().toString();
+        config.date = new Date().toLocaleDateString();
         config.save()
         return config;
 

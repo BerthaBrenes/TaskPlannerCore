@@ -1,5 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from "class-validator";
-import { tableroType } from "./tableroType.enum";
+import { IsString, IsNotEmpty} from "class-validator";
 
 export class BoardDTO{
     @IsString()
@@ -7,12 +6,9 @@ export class BoardDTO{
 
     @IsNotEmpty()
     owner: any;
-    
-    @IsOptional()
-    friends: any;
 
     @IsString()
-    type: tableroType;
+    type: string;
 
     @IsString()
     description: string;

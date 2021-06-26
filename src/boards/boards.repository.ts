@@ -4,19 +4,17 @@ import { BoardDTO } from "./dto/boards.dto";
 
 @EntityRepository(Board)
 export class BoardsRepository extends Repository<Board>{
-    /**
-     * Create a tablero
-     * @param data of the tablero
-     */
+
     async createBoard(data: BoardDTO){
-        const { columns, description, friends, name, owner, type} = data;
-        const tablero = new Board();
-        tablero.columns = columns;
-        tablero.description = description;
-        tablero.friends = friends;
-        tablero.name = name;
-        tablero.owner = owner;
-        tablero.type = type;
-        return await tablero.save();
+        const { columns, description, name, owner, type} = data;
+        const board = new Board();
+        board.columns = columns;
+        board.description = description;
+        //board.friends = friends;
+        board.name = name;
+        board.owner = owner;
+        board.type = type;
+        board.creationDate = new Date().toLocaleDateString();
+        return board.save();
     }
 }
