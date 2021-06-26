@@ -11,6 +11,11 @@ export class SysConfigRepository extends Repository<SysConfig>{
     async createConfig(data: SysConfigDTO){
         
         const config = new SysConfig();
+        config.lastModifiedBy = data.lastModifiedBy;
+        config.boardTypes = data.boardTypes;
+        config.systemUses = data.systemUses;
+        config.hobbies = data.hobbies;
+        config.avatars = data.avatars;
         config.date = Date.now().toString();
         config.save()
         return config;

@@ -1,26 +1,32 @@
-FROM node:12.13-alpine As development
+FROM node:12.2.0 as build
 
 WORKDIR /usr/src/app
 
-COPY ["package.json","package-lock.json","./"]
+ENV PATH /app/node_modules/.bin:$PATH
+RUN npm install -g @nestjs/cli
 
-RUN npm install --only=development
+COPY ["package.json","package-lock.json" ,"./"]
+
+RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN nest build
 
-FROM node:12.13-alpine as production
+## Prod
+FROM node:12.2.0-alpine as production
+
+WORKDIR /usr/src/app
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-COPY package*.json ./
+COPY ["package.json","package-lock.json","./"]
 
-RUN npm install --only=production
-
+RUN npm install --only=prod
 COPY . .
+COPY --from=build /usr/src/app/dist /usr/src/app
 
-COPY --from=development /usr/src/app/dist ./dist
 
+EXPOSE 3000
 CMD ["node","dist/main"]

@@ -17,17 +17,17 @@ export class BoardsController implements OnApplicationShutdown {
    */
   constructor(private readonly tableroService: BoardsService) { }
   /**
- * Create a new tablero
+ * Create a new board
  * @param data of the request
  */
   @Post()
   @ApiBody({ required: true, type: BoardDTO })
   @ApiResponse({ status: 200 })
-  @ApiOperation({ summary: 'Create a new tablero' })
+  @ApiOperation({ summary: 'Create a new board' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: BoardDTO) {
-    this.logger.verbose(`Create a new tablero`);
-    return await this.tableroService.createTablero(data);
+  async createNewBoard(@Body() data: BoardDTO) {
+    this.logger.verbose(`Create a new board`);
+    return await this.tableroService.createBoard(data);
   }
   /**
     * Delete the board
@@ -35,12 +35,12 @@ export class BoardsController implements OnApplicationShutdown {
     */
   @Delete('/:id')
   @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Delete the board' })
-  @ApiNotFoundResponse({ description: 'board id not found' })
+  @ApiOperation({ summary: 'Delete the Board' })
+  @ApiNotFoundResponse({ description: 'Board id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
   async deleteColumn(@Param('id') id: string) {
-    this.logger.verbose(`Delete the board ${id}`);
+    this.logger.verbose(`Delete the Board ${id}`);
     return this.tableroService.deleteBoard(id);
   }
   /**
@@ -73,18 +73,17 @@ export class BoardsController implements OnApplicationShutdown {
     return await this.tableroService.getTByOwner(id);
   }
   /**
-   * Get the Columns by a tablero
+   * Get the board with the id
    * @param id of the columns
    */
-  @Get('columns/:id')
+  @Get(':id')
   @ApiParam({ name: 'id' })
   @ApiResponse({ status: 200 })
-  @ApiNotFoundResponse({ description: 'column id not found' })
-  @ApiOperation({ summary: 'Get the Columns by a tablero' })
+  @ApiOperation({ summary: 'Get the board with the id' })
   @UsePipes(ValidationPipe)
   async getTareasByColumns(@Param('id') id: string) {
-    this.logger.verbose(`Get the Columns by a tablero ${id}`);
-    return await this.tableroService.getTByOwner(id);
+    this.logger.verbose(`Get the board with the id ${id}`);
+    return await this.tableroService.getBoard(id);
   }
   /**
    * shutdown event
