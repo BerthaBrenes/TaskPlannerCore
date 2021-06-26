@@ -2,74 +2,88 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { SysConfigRepository } from './sysconfig.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SysConfigDTO } from './dto/sysconfig.dto';
-import { tableroType } from 'src/boards/dto/tableroType.enum';
-/**
- * Injectable
- */
+
+
 @Injectable()
 export class SysConfigService {
-    /**
-     * First method in the service
-     * @param sisconfigRepository Controller for the repo
-     */
+
+
     constructor(
         @InjectRepository(SysConfigRepository)
-        private sisconfigRepository: SysConfigRepository
+        private sysConfigRepository: SysConfigRepository
     ){}
 
-    /**
-     * Get the system configuration
-     * @param id string of the user 
-     */
+
     async getConfig(id: string){
-        const config = await this.sisconfigRepository.findOne({where: {idUser: id}});
+        const config = await this.sysConfigRepository.findOne({where: {idUser: id}});
         if(!config){
             throw new NotFoundException();
         }
         return config;
     }
-    /**
-     * Create a new config system
-     * @param data of the config
-     */
+
+
     async CreateConfig(data: SysConfigDTO){
-        return await this.sisconfigRepository.createConfig(data);
+        return this.sysConfigRepository.createConfig(data);
     }
-    /**
-     * Delete a config by the user
-     * @param id of the user
-     */
-    async deleteConfig(id: string){
-        const found = await this.sisconfigRepository.findOne({where: {idUser: id}});
+
+    
+    async getBoardTypes(){
+        const found = await this.sysConfigRepository.findOne({where: {},select: ["boardTypes"],order:{id:-1}})
+        return found.boardTypes;
+    }
+
+    async getHobbies(){
+        const found = await this.sysConfigRepository.findOne({where: {},select: ["hobbies"],order:{id:-1}});
+        return found.hobbies;
+    }
+
+    async getSysUses(){
+        const found = await this.sysConfigRepository.findOne({where: {},select: ["systemUses"],order:{id:-1}})
+        return found.systemUses;
+    }
+
+    async getAvatarList(){
+        const found = await this.sysConfigRepository.findOne({where: {},select: ["avatars"],order:{id:-1}});
+        return found.avatars;  
+    }
+
+
+    async editBoardTypes(types: string[], by: string){
+        const found = await this.sysConfigRepository.findOne({where: {},order:{id:-1}});
+        found.lastModifiedBy = by;
+        found.boardTypes = types;
+        return found.save();
+    }
+
+    async editHobbies(hobbies: string[], by: string){
+        const found = await this.sysConfigRepository.findOne({where: {},order:{id:-1}});
         if(!found){
             throw new NotFoundException();
         }
-        return this.sisconfigRepository.delete(id);
+        found.lastModifiedBy = by;
+        found.hobbies = hobbies;
+        return found.save();
     }
-    /**
-     * Add a type of the tablero
-     * @param id of the user
-     * @param type of the tablero
-     */
-    async addTableroType(id:string, type: tableroType){
-        const found = await this.sisconfigRepository.findOne({where: {idUser: id}});
+
+    async editSystemUses(sysUsers: string[], by: string){
+        const found = await this.sysConfigRepository.findOne({where: {},order:{id:-1}});
         if(!found){
             throw new NotFoundException();
         }
-        //found.tableroType = type;
-        //return await found.save();
+        found.lastModifiedBy = by;
+        found.systemUses = sysUsers;
+        return found.save();
     }
-    /**
-     * Set the url of the profile photo
-     * @param id of the user
-     * @param url of the photo
-     */
-    async editProfilePhoto(id: string, url: string){
-        const found = await this.sisconfigRepository.findOne({where: {idUser: id}});
+
+    async editAvatarList(avatars: string[], by: string){
+        const found = await this.sysConfigRepository.findOne({where: {},order:{id:-1}});
         if(!found){
             throw new NotFoundException();
         }
-        //found.profilePhotos = url;
-        //return await found.save();
+        found.lastModifiedBy = by;
+        found.avatars = avatars;
+        return found.save();
     }
+
 }
