@@ -38,16 +38,13 @@ export class BoardsService {
      * @param id of the tablero
      * @param data to update the tablero
      */
-    async updateTablero(id: string, data: BoardDTO) {
+    async updateTablero(id: string, data: {description, name}) {
         const found = await this.tableroRepo.findOne(id);
         if (!found) {
             throw new NotFoundException(`The tablero with the id ${id} not found`);
         }
-        found.columns = data.columns;
         found.description = data.description;
         found.name = data.name;
-        found.owner = data.owner;
-        found.type = data.type;
         return found.save();
      }
     /**
