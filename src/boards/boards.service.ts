@@ -21,11 +21,12 @@ export class BoardsService {
             throw new ConflictException(`The board with the name ${data.name} already exist`);
         }
 
-        const user = await this.stdRepository.findOne(found.owner);
+        const board = await this.repository.createBoard(data);
+        const user = await this.stdRepository.findOne(data.owner);
         user.myBoards.push(found.id);
         await user.save();
 
-        return this.repository.createBoard(data);
+        return board;
     }
 
     async deleteBoard(id: string) {
