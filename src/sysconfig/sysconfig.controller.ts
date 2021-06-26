@@ -32,19 +32,54 @@ export class SysConfigController implements OnApplicationShutdown {
   }
 
   /**
-     * Get the system configuration
+     * Get the hobbies system configuration
      * @param id of the user
      */
-  @Get('/:id')
-  @ApiParam({ name: 'id' })
+  @Get('hobbies')
   @ApiResponse({ status: 200 })
-  @ApiNotFoundResponse({ description: 'user id not found' })
-  @ApiOperation({ summary: 'Get the system configuration' })
+  @ApiOperation({ summary: 'Get the hobbies system configuration' })
   @UsePipes(ValidationPipe)
-  async getColumns(@Param('id') id: string) {
-    this.logger.verbose(`get a system config ${id}`);
-    return await this.sisconfigService.getConfig(id);
+  async getHobbies() {
+    this.logger.verbose(`Get the hobbies system configuration `);
+    return await this.sisconfigService.getHobbies();
   }
+  /**
+     * Get the system user configuration
+     * @param id of the user
+     */
+    @Get('SysConfig')
+    @ApiResponse({ status: 200 })
+    @ApiOperation({ summary: 'Get the system user configuration' })
+    @UsePipes(ValidationPipe)
+    async getSysConfig() {
+      this.logger.verbose(`Get the system user configuration `);
+      return await this.sisconfigService.getSysUser();
+    }
+    /**
+     * Get the avatar system configuration
+     * @param id of the user
+     */
+  @Get('avatar')
+  @ApiResponse({ status: 200 })
+  @ApiOperation({ summary: 'Get the avatar system configuration' })
+  @UsePipes(ValidationPipe)
+  async getAvatar() {
+    this.logger.verbose(`Get the avatar system configuration`);
+    return await this.sisconfigService.getAvatar();
+  }
+  /**
+     * Get the hobbies system configuration
+     * @param id of the user
+     */
+    @Get('types')
+    @ApiResponse({ status: 200 })
+    @ApiNotFoundResponse({ description: 'user id not found' })
+    @ApiOperation({ summary: 'Get the types system configuration' })
+    @UsePipes(ValidationPipe)
+    async getColumns() {
+      this.logger.verbose(`Get the types system configuration `);
+      return await this.sisconfigService.getBoardTypes();
+    }
 
   /**
    * Delete a config by the user
@@ -61,32 +96,60 @@ export class SysConfigController implements OnApplicationShutdown {
   }
 
   /**
-   * Add a type of the tablero in config
-   * @param id of the user
+   * Add a type in config
+   * @param lastModifi of the user
    * @param type status of the request
    */
-  @Put('/:id/:type')
-  @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: ' Add a type of the tablero in config' })
-  @ApiNotFoundResponse({ description: 'user id not found' })
+  @Put('types/:lastModifi/:type')
+  @ApiParam({ name: 'lastModifi' })
+  @ApiParam({ name: 'type' })
+  @ApiOperation({ summary: ' Add a type in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async changeStatus(@Param('id') id: string, @Param('type') type: tableroType) {
-    return this.sisconfigService.addTableroType(id, type);
+  async editBoardTypes(@Param('lastModifi') lastModifi: string, @Param('type') type: string[]) {
+    return this.sisconfigService.editBoardTypes(type, lastModifi);
   }
   /**
-   *  Set the url of the profile photo
-   * @param id of the user
-   * @param url status of the request
+   * Add hobbies in config
+   * @param lastModifi of the user
+   * @param hobbies status of the request
    */
-  @Put('/:id')
-  @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: ' Add a type of the tablero in config' })
-  @ApiNotFoundResponse({ description: 'user id not found' })
+  @Put('types/:lastModifi/:hobbies')
+  @ApiParam({ name: 'lastModifi' })
+  @ApiParam({ name: 'hobbies' })
+  @ApiOperation({ summary: ' Add hobbies in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async changeProphile(@Param('id') id: string, @Body('url') url: string) {
-    return this.sisconfigService.editProfilePhoto(id, url);
+  async editHobbies(@Param('lastModifi') lastModifi: string, @Param('hobbies') hobbies: string[]) {
+    return this.sisconfigService.editHobbies(hobbies, lastModifi);
+  }
+  /**
+   * Add sysUsers in config
+   * @param lastModifi of the user
+   * @param sysUsers status of the request
+   */
+  @Put('types/:lastModifi/:sysUsers')
+  @ApiParam({ name: 'lastModifi' })
+  @ApiParam({ name: 'sysUsers' })
+  @ApiOperation({ summary: ' Add sysUsers in config' })
+  @ApiResponse({ status: 201 })
+  @UsePipes(ValidationPipe)
+  async editSysUser(@Param('lastModifi') lastModifi: string, @Param('sysUsers') sysUsers: string[]) {
+    return this.sisconfigService.editSystemUser(sysUsers, lastModifi);
+  }
+  /**
+   * Add avatars in config
+   * @param lastModifi of the user
+   * @param hobbies status of the request
+   */
+  @Put('types/:lastModifi/:avatars')
+  @ApiParam({ name: 'lastModifi' })
+  @ApiParam({ name: 'avatars' })
+  @ApiOperation({ summary: ' Add avatars in config' })
+  @ApiResponse({ status: 201 })
+  @UsePipes(ValidationPipe)
+  async editAvatars(@Param('lastModifi') lastModifi: string, @Param('avatars') avatars: string[]) {
+    return this.sisconfigService.editAvatarList(avatars, lastModifi);
   }
   /**
    * shutdown event

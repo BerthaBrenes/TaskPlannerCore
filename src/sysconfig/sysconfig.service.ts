@@ -60,16 +60,65 @@ export class SysConfigService {
         //return await found.save();
     }
     /**
-     * Set the url of the profile photo
-     * @param id of the user
-     * @param url of the photo
+     * Get the board types for the config
      */
-    async editProfilePhoto(id: string, url: string){
-        const found = await this.sisconfigRepository.findOne({where: {idUser: id}});
+    async getBoardTypes(){
+        const found = await this.sisconfigRepository.findOne({where: {},select: ["boardTypes"],order:{id:-1}})
+        return found;
+    }
+    /**
+     * Get the hobbies for the config
+     */
+    async getHobbies(){
+        const found = await this.sisconfigRepository.findOne({where: {},select: ["hobbies"],order:{id:-1}});
+        return found;
+    }
+    /**
+     * Get the sysUser
+     */
+    async getSysUser(){
+        const found = await this.sisconfigRepository.findOne({where: {},select: ["systemUses"],order:{id:-1}})
+        return found;
+    }
+    /**
+     * Get the avatars
+     */
+    async getAvatar(){
+        const found = await this.sisconfigRepository.findOne({where: {},select: ["avatars"],order:{id:-1}});
+        return found;  
+    }
+    async editBoardTypes(types: string[], lastModifi: string){
+        const found = await this.sisconfigRepository.findOne({where: {},order:{id:-1}});
+        found.lastModifiedBy = lastModifi;
+        found.boardTypes = types;
+        return found.save();
+    }
+    async editHobbies(hobbies: string[], lastModifi: string){
+        const found = await this.sisconfigRepository.findOne({where: {},order:{id:-1}});
         if(!found){
             throw new NotFoundException();
         }
-        //found.profilePhotos = url;
-        //return await found.save();
+        found.lastModifiedBy = lastModifi;
+        found.hobbies = hobbies;
+        return found.save();
     }
+    async editSystemUser(sysUsers: string[], lastModifi: string){
+        const found = await this.sisconfigRepository.findOne({where: {},order:{id:-1}});
+        if(!found){
+            throw new NotFoundException();
+        }
+        found.lastModifiedBy = lastModifi;
+        found.systemUses = sysUsers;
+        return found.save();
+    }
+    async editAvatarList(avatars: string[], lastModifi: string){
+        const found = await this.sisconfigRepository.findOne({where: {},order:{id:-1}});
+        if(!found){
+            throw new NotFoundException();
+        }
+        found.lastModifiedBy = lastModifi;
+        found.avatars = avatars;
+        return found.save();
+    }
+
 }
