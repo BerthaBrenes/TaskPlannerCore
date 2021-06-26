@@ -3,11 +3,13 @@ import { BoardsService } from './boards.service';
 import { BoardsController } from './boards.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardsRepository } from './boards.repository';
+import { StudentRepository } from 'src/students/students.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      BoardsRepository
+      BoardsRepository,
+      StudentRepository
     ])
   ],
   providers: [BoardsService],

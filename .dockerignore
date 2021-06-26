@@ -3,3 +3,4 @@ documentation
 npm-debug.log
 .git
 .gitignore
+dist

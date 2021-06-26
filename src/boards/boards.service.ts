@@ -2,13 +2,16 @@ import { Injectable, ConflictException, NotFoundException, Logger } from '@nestj
 import { BoardsRepository } from './boards.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardDTO } from './dto/boards.dto';
+import { StudentRepository } from 'src/students/students.repository';
 
 @Injectable()
 export class BoardsService {
 
     constructor(
         @InjectRepository(BoardsRepository)
-        private repository: BoardsRepository
+        private repository: BoardsRepository,
+        @InjectRepository(StudentRepository)
+        private stdRepository: StudentRepository
     ) { }
 
 
@@ -17,6 +20,11 @@ export class BoardsService {
         if (found) {
             throw new ConflictException(`The board with the name ${data.name} already exist`);
         }
+
+        const user = await this.stdRepository.findOne(found.owner);
+        user.myBoards.push(found.id);
+        await user.save();
+
         return this.repository.createBoard(data);
     }
 
@@ -25,6 +33,12 @@ export class BoardsService {
         if (!found) {
             throw new NotFoundException(`The Board with the id ${id} not found`);
         }
+
+        const user = await this.stdRepository.findOne(found.owner);
+        const index = user.myBoards.findIndex((element) => element === id);
+        user.myBoards.splice(index, 1);
+        await user.save();
+
         return found.remove();
     }
 
