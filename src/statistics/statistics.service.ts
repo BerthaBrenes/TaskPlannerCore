@@ -3,6 +3,7 @@ import { BoardsRepository } from 'src/boards/boards.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from 'src/users/users.repository';
 import { Month } from '../data/dates';
+import { tableroType } from 'src/boards/dto/tableroType.enum';
 @Injectable()
 export class StatisticsService {
     /**
@@ -30,7 +31,7 @@ export class StatisticsService {
      * @param id of the user
      * @param month of the month
      */
-    async getStatisticsByLast6(id: string, month: Date){
+    async getStatisticsByLast6(id: string){
         const found = await this.boardRepository.aggregate([
             {
               $project: {
@@ -40,5 +41,18 @@ export class StatisticsService {
             }]
           );
         return found;
+    }
+    async getBoardsCountByType(){
+        const basic = await this.boardRepository.count({where: {
+            type: tableroType.BASIC
+        }})
+        const blank = await this.boardRepository.count({where: {
+            type: tableroType.BLANK
+        }});
+        return [{
+            type: tableroType.BASIC, count: basic
+        }, {
+            type: tableroType.BLANK, count: blank;
+        }]
     }
 }
