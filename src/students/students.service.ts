@@ -39,4 +39,15 @@ export class StudentsService {
         }
         return found;
     }
+
+
+    async deleteProfile(id: string): Promise<Student> {
+        const found = await this.stdRepository.findOne(id);
+        if (!found) {
+            throw new NotFoundException(`Student with the id ${id} not found`);
+        }
+        await this.userRepository.delete({id: found.userId});
+        await this.stdRepository.delete({id: found.id});
+        return found;
+    }
 }
