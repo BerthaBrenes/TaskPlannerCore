@@ -1,6 +1,6 @@
 import { Controller, Logger, Post, UsePipes, ValidationPipe, Body, Put, Param, Get, Patch } from '@nestjs/common';
 import { FriendRequestService } from './friend-request.service';
-import { RequestDTO } from './dto/friend-request.dto';
+import { requestDTO } from './dto/friend-request.dto';
 import { StatusType } from 'src/data/statusType.enum';
 
 @Controller('friend-request')
@@ -12,7 +12,7 @@ export class FriendRequestController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createRequest(@Body() data: RequestDTO) {
+  async createRequest(@Body() data: requestDTO) {
     this.logger.verbose(`Create a friend request`);
     return await this.service.createRequest(data);
   }

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FriendRequestRepository } from './friend.request.repository';
-import { RequestDTO } from './dto/friend-request.dto';
+import { requestDTO } from './dto/friend-request.dto';
 import { StatusType } from 'src/data/statusType.enum';
 import { StudentRepository } from 'src/students/students.repository';
 import { FriendRequest } from './friend.request.entity';
@@ -17,7 +17,7 @@ export class FriendRequestService {
     ) { }
 
 
-    async createRequest(data: RequestDTO) {
+    async createRequest(data: requestDTO) {
         return this.requestRepository.createRequest(data);
     }
 

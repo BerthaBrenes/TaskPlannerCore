@@ -15,7 +15,7 @@ export class BoardsRepository extends Repository<Board>{
         tablero.description = description;
         tablero.friends = friends;
         tablero.name = name;
-        //tablero.owner = owner;
+        tablero.owner = owner;
         tablero.type = type;
         return await tablero.save();
     }
