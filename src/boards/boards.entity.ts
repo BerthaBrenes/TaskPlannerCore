@@ -21,5 +21,5 @@ export class Board extends BaseEntity{
     @Column()
     description: string;
 
-    columns: ColumnI;
+    columns: ColumnI[];
 }
