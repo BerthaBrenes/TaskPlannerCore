@@ -1,4 +1,4 @@
-import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Delete, Param, Patch, Get } from '@nestjs/common';
+import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Delete, Param, Patch, Get, Put } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiResponse, ApiOperation, ApiParam, ApiNotFoundResponse } from '@nestjs/swagger';
 import { BoardsService } from './boards.service';
 import { SysConfigDTO } from 'src/sysconfig/dto/sysconfig.dto';
@@ -57,6 +57,20 @@ export class BoardsController implements OnApplicationShutdown {
   async updateTarea(@Param('id') id: string, @Body() data: {description, name}) {
     return this.tableroService.updateTablero(id, data);
   }
+   /**
+  * Update tablero 
+  * @param id of the tablero
+  * @param data status of the request
+  */
+ @Put('/:id')
+ @ApiParam({ name: 'id' })
+ @ApiOperation({ summary: 'Update the data of a tarea' })
+ @ApiNotFoundResponse({ description: 'tarea id not found' })
+ @ApiResponse({ status: 201 })
+ @UsePipes(ValidationPipe)
+ async addColumn(@Param('id') id: string, @Body() data: any) {
+   return this.tableroService.addColumn(id, data);
+ }
   /**
     * Get the tareas by the owner
     * @param id of the user

@@ -47,6 +47,14 @@ export class BoardsService {
         found.name = data.name;
         return found.save();
      }
+     async addColumn(id: string, column: any){
+        const found = await this.tableroRepo.findOne(id);
+        if (!found) {
+            throw new NotFoundException(`The tablero with the id ${id} not found`);
+        }
+        found.columns.push(column);
+        return found.save();
+     }
     /**
      * Get the tablero for the owner
      * @param id of the owner
