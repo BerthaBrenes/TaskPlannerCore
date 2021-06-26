@@ -1,14 +1,12 @@
 import { Controller, Logger, Post, UsePipes, ValidationPipe, Body, Get, Param, Delete } from '@nestjs/common';
 import { AdminsService } from './admins.service';
-import { adminDTO } from './dto/admin.dto';
-import { ApiBody, ApiResponse, ApiOperation, ApiParam, ApiNotFoundResponse } from '@nestjs/swagger';
+import { AdminDTO } from './dto/admin.dto';
+import { ApiBody, ApiResponse, ApiParam, ApiNotFoundResponse } from '@nestjs/swagger';
 
 @Controller('admins')
 export class AdminsController {
-/**
-  * Variable for the logger
-  */
-  private logger: Logger = new Logger('Sis Controller');
+
+  private logger: Logger = new Logger('Admin Controller');
 
   /**
    * First method in the component
@@ -16,19 +14,20 @@ export class AdminsController {
    */
   constructor(private readonly adminService: AdminsService) { }
 
-   /**
-   * Create a new admin user
-   * @param data of the user
-   */
+  /**
+  * Create a new admin user
+  * @param data of the user
+  */
   @Post()
-  @ApiBody({ required: true, type: adminDTO })
+  @ApiBody({ required: true, type: AdminDTO })
   @ApiResponse({ status: 200 })
-  @ApiOperation({ summary: 'Create a new admin user' })
   @UsePipes(ValidationPipe)
-  async createAdmin(@Body() data: adminDTO) {
+  async createAdmin(@Body() data: AdminDTO) {
     this.logger.verbose(`Create a admin user`);
-    return await this.adminService.createAdmin(data);
+    return this.adminService.createAdmin(data);
   }
+
+
   /**
    * Validate the email of the user exist
    * @param id of the person
@@ -37,26 +36,28 @@ export class AdminsController {
   @ApiParam({ name: 'email' })
   @ApiResponse({ status: 200 })
   @ApiNotFoundResponse({ description: 'owner id not found' })
-  @ApiOperation({ summary: 'Get the system configuration' })
   @UsePipes(ValidationPipe)
-  async getTareasByOwmer(@Param('id') id: string) {
+  async getProfile(@Param('id') id: string) {
     this.logger.verbose(`Get the tareas by the owner ${id}`);
-    return await this.adminService.getAdmin(id);
+    return this.adminService.getAdmin(id);
   }
-    /**
+
+
+  /**
   * Delete an user
   * @param id of the user
   */
   @Delete('/:id')
   @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Delete an user' })
   @ApiNotFoundResponse({ description: 'user id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async deleteColumn(@Param('id') id: string) {
+  async deleteAdmin(@Param('id') id: string) {
     this.logger.verbose(`Delete an user ${id}`);
-    return this.adminService.deleteUser(id);
+    return this.adminService.deleteAdmin(id);
   }
+
+
   onApplicationShutdown(signal: string) {
     console.log(signal); // e.g. "SIGINT"
   }

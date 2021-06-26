@@ -1,55 +1,57 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { AdminRepository } from './admins.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from 'src/users/users.repository';
-import { adminDTO } from './dto/admin.dto';
+import { AdminDTO } from './dto/admin.dto';
 import { MongoError } from 'typeorm';
 import { User, UserType } from 'src/users/users.entity';
+
 @Injectable()
 export class AdminsService {
-    /**
-     * First method in the service
-     * @param userRepository Controller for the user repository
-     */
+
     constructor(
         @InjectRepository(AdminRepository)
         private adminRepository: AdminRepository,
         @InjectRepository(UserRepository)
         private userRepository: UserRepository
-    ) {
-    }
-    async createAdmin(data: adminDTO){
+    ) { }
+    
+    
+    async createAdmin(data: AdminDTO){
         const found = await this.adminRepository.findOne({ where: { email: data.email } });
         if (found) {
-            throw new MongoError(`User with the id ${data.email} already exist`);
+            throw new MongoError(`Admin with the id ${data.email} already exist`);
         }
+        
         const {name, email} = data;
         const user = new User();
         user.email = email;
         user.name = name;
         user.role = UserType.ADMIN;
+        
         const id = (await this.userRepository.createUser(user)).id
         return this.adminRepository.createAdmin(data, id);
     }
-    /**
-     * delete an user
-     * @param id of the user
-     */
-    async deleteUser(id: string) {
+    
+    
+    async deleteAdmin(id: string) {
+
+        if (id === '60d679252e0e2b76eaad0472')
+            throw new ForbiddenException(`The main administrator cannot be removed`);
+
         const found = await this.adminRepository.findOne(id);
         if (!found) {
-            throw new NotFoundException(`User with the id ${id} not found`);
+            throw new NotFoundException(`Admin with the id ${id} not found`);
         }
-        return await this.adminRepository.delete(id);
+        await this.userRepository.delete(found.userId);
+        return this.adminRepository.delete(id);
     } 
-    /**
-     * Validate the email exist
-     * @param email of the user
-     */
+    
+    
     async getAdmin(id: string) {
         const found = await this.adminRepository.findOne(id);
         if (!found) {
-            throw new NotFoundException(`User with the id ${id} not found`);
+            throw new NotFoundException(`Admin with the id ${id} not found`);
         }
         return found;
     }
