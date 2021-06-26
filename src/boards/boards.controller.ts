@@ -73,18 +73,17 @@ export class BoardsController implements OnApplicationShutdown {
     return await this.tableroService.getTByOwner(id);
   }
   /**
-   * Get the Columns by a tablero
+   * Get the board with the id
    * @param id of the columns
    */
-  @Get('columns/:id')
+  @Get(':id')
   @ApiParam({ name: 'id' })
   @ApiResponse({ status: 200 })
-  @ApiNotFoundResponse({ description: 'column id not found' })
-  @ApiOperation({ summary: 'Get the Columns by a tablero' })
+  @ApiOperation({ summary: 'Get the board with the id' })
   @UsePipes(ValidationPipe)
   async getTareasByColumns(@Param('id') id: string) {
-    this.logger.verbose(`Get the Columns by a tablero ${id}`);
-    return await this.tableroService.getTByOwner(id);
+    this.logger.verbose(`Get the board with the id ${id}`);
+    return await this.tableroService.getBoard(id);
   }
   /**
    * shutdown event
