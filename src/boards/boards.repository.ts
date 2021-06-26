@@ -8,7 +8,7 @@ export class BoardsRepository extends Repository<Board>{
      * Create a tablero
      * @param data of the tablero
      */
-    async createTablero(data: BoardDTO){
+    async createBoard(data: BoardDTO){
         const { columns, description, friends, name, owner, type} = data;
         const tablero = new Board();
         tablero.columns = columns;

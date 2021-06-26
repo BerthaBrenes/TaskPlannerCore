@@ -17,31 +17,31 @@ export class BoardsController implements OnApplicationShutdown {
    */
   constructor(private readonly tableroService: BoardsService) { }
   /**
- * Create a new tablero
+ * Create a new board
  * @param data of the request
  */
   @Post()
   @ApiBody({ required: true, type: BoardDTO })
   @ApiResponse({ status: 200 })
-  @ApiOperation({ summary: 'Create a new tablero' })
+  @ApiOperation({ summary: 'Create a new board' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: BoardDTO) {
-    this.logger.verbose(`Create a new tablero`);
-    return await this.tableroService.createTablero(data);
+  async createNewBoard(@Body() data: BoardDTO) {
+    this.logger.verbose(`Create a new board`);
+    return await this.tableroService.createBoard(data);
   }
   /**
-    * Delete the tablero
+    * Delete the Board
     * @param id of the column
     */
   @Delete('/:id')
   @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Delete the tablero' })
-  @ApiNotFoundResponse({ description: 'Tablero id not found' })
+  @ApiOperation({ summary: 'Delete the Board' })
+  @ApiNotFoundResponse({ description: 'Board id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
   async deleteColumn(@Param('id') id: string) {
-    this.logger.verbose(`Delete the tablero ${id}`);
-    return this.tableroService.deleteTablero(id);
+    this.logger.verbose(`Delete the Board ${id}`);
+    return this.tableroService.deleteBoard(id);
   }
   /**
   * Update tablero 
