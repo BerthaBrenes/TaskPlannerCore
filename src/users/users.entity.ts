@@ -1,73 +1,33 @@
-import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
-import { userType } from "./dto/userType.enum";
-import { hobbies } from "./dto/hobbies.enum";
-import { applications } from "./dto/applications.enum";
+import { BaseEntity, Entity, Column, ObjectIdColumn } from "typeorm";
 
 @Entity()
-export class UserI extends BaseEntity{
+export class User extends BaseEntity{
 
-    @PrimaryColumn()
-    id:string;
-
-    @Column()
-    Name_1: string;
+    @ObjectIdColumn()
+    id: string;
 
     @Column()
-    Name_2: string;
-  
-    @Column()
-    Lastname_1: string;
-
-    @Column()
-    Lastname_2: string;
+    name: string;
 
     @Column()
     email: string;
 
     @Column()
-    password: string
+    role: UserType;
+}
 
-    @Column()
-    dmi: string
+export enum UserType{
+    PROFESSOR = "PROFESSOR",
+    STUDENT = "STUDENT",
+    ADMIN = "ADMIN"
+}
 
-    @Column()
-    license: string
-
-    @Column()
-    career: string
-
-    @Column()
-    province_residence: string
-
-    @Column()
-    canton: string;
-
-    @Column()
-    district: string;
-
-    @Column()
-    province_living: string;
-
-    @Column()
-    profile_photo: string;
-
-    @Column()
-    type: userType;
-
-    @Column()
-    application: applications[];
-
-    @Column()
-    hobbies: hobbies[];
-
-    @Column()
-    Tableros_Owner: string[];
-
-    @Column()
-    Tableros_Friend: string[];
-
-    @Column()
-    Friends: string[];
-    
-
+export enum Province {
+    SJ = "San Jose",
+    AL = "Alajuela",
+    CA = "Cartago",
+    HE = "Heredia",
+    GU = "Guanacaste",
+    PU = "Puntarenas",
+    LI = "Limon"
 }
