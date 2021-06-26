@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TablerosModule } from './tableros/tableros.module';
+import { TablerosModule } from './board/tableros.module';
 import { TareasModule } from './tareas/tareas.module';
 import { ColumnsModule } from './columns/columns.module';
 import { AuthModule } from './auth/auth.module';
