@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserType } from 'src/users/users.entity';
 import { UserRepository } from 'src/users/users.repository';
@@ -29,5 +29,14 @@ export class StudentsService {
         const id = (await this.userRepository.createUser(user)).id;
 
         return this.stdRepository.createStudent(data,id);
+    }
+
+
+    async getProfile(id: string){
+        const found = await this.stdRepository.findOne(id);
+        if (!found) {
+            throw new NotFoundException(`Student with the id ${id} not found`);
+        }
+        return found;
     }
 }
