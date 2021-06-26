@@ -1,16 +1,10 @@
-import { IsOptional, IsEnum, IsNotEmpty } from "class-validator";
-import { statusType } from "src/request/dto/statusType.enum";
+import { IsOptional} from "class-validator";
 
-
-export class requestDTO{
+export class RequestDTO{
  
     @IsOptional()
     from: any;
 
     @IsOptional()
     to: any;
-    
-    @IsEnum(statusType)
-    @IsNotEmpty()
-    status: statusType;
 }

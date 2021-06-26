@@ -39,4 +39,11 @@ export class StudentsService {
         }
         return found;
     }
+
+    
+    async addFriend(id: string, friendId: string) {
+        const found = await this.stdRepository.findOne(id);
+        found.friends.push(friendId);
+        return found.save();
+    }
 }
