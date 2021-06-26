@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString, IsEnum } from "class-validator";
+import { IsNotEmpty, IsString, IsEnum, IsOptional } from "class-validator";
 import { Province } from "src/data/province.enum";
 
-export class professorDTO{
+export class ProfessorDTO {
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -26,6 +26,6 @@ export class professorDTO{
     @IsNotEmpty()
     avatarUrl: string;
     
-    @IsNotEmpty()
-    shareBoards: string[];
+    @IsOptional()
+    sharedBoards: string[];
 }

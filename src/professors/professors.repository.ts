@@ -1,12 +1,13 @@
 import { MongoRepository, EntityRepository, MongoError } from "typeorm";
 import { Professor } from "./professors.entity";
-import { professorDTO } from "./dto/professor.dto";
+import { ProfessorDTO } from "./dto/professor.dto";
 
 @EntityRepository(Professor)
-export class professorRepository extends MongoRepository<Professor>{
+export class ProfessorRepository extends MongoRepository<Professor>{
 
-    async createProfessor(data: professorDTO, id: string): Promise<Professor>{
-        const {avatarUrl, career, dni, email, name, provinceOfResidence, shareBoards} = data;
+    async createProfessor(data: ProfessorDTO, id: string): Promise<Professor>{
+        const {avatarUrl, career, dni, email, name, provinceOfResidence} = data;
+        
         const professor = new Professor();
         professor.avatarUrl = avatarUrl;
         professor.career = career;
@@ -15,14 +16,19 @@ export class professorRepository extends MongoRepository<Professor>{
         professor.email = email;
         professor.name = name;
         professor.provinceOfResidence = provinceOfResidence;
-        professor.shareBoards = shareBoards;
-        return await professor.save();
+        professor.sharedBoards = [];
+        
+        return professor.save();
     }
-    deleteProfessor(id: string){
+
+
+    async deleteProfessor(id: string){
         const found = this.findOne(id);
+        
         if(!found){
             throw new MongoError('User not found');
         }
+
         return this.delete(id);
     }
 }

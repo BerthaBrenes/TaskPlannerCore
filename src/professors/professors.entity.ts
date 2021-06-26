@@ -26,7 +26,7 @@ export class Professor extends BaseEntity{
     avatarUrl: string;
     
     @Column()
-    shareBoards: string[];
+    sharedBoards: string[];
 
     @Column()
     userId: string;

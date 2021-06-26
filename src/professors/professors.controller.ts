@@ -1,29 +1,35 @@
 import { Controller, OnApplicationShutdown, Logger, Post, UsePipes, ValidationPipe, Body, Patch, Param, Delete, Put, Get } from '@nestjs/common';
 import { ProfessorsService } from './professors.service';
-import { professorDTO } from './dto/professor.dto';
+import { ProfessorDTO } from './dto/professor.dto';
 import { ApiBody, ApiResponse, ApiOperation, ApiParam, ApiNotFoundResponse } from '@nestjs/swagger';
 
 @Controller('professors')
 export class ProfessorsController implements OnApplicationShutdown{
-    /**
+  
+  /**
   * Variable for the logger
   */
-  private logger: Logger = new Logger('Sis Controller');
+  private logger: Logger = new Logger('Professor Controller');
 
-  constructor(private readonly professorService: ProfessorsService) { }
+  constructor(
+    private readonly professorService: ProfessorsService
+  ) { }
+  
   /**
   * Create a new professor user
   * @param data of the user
   */
   @Post()
-  @ApiBody({ required: true, type: professorDTO })
+  @ApiBody({ required: true, type: ProfessorDTO })
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Create a new professor user' })
   @UsePipes(ValidationPipe)
-  async createProfessor(@Body() data: professorDTO) {
+  async createProfessor(@Body() data: ProfessorDTO) {
     this.logger.verbose(`Create a professor user`);
-    return await this.professorService.createProfessor(data);
+    return this.professorService.createProfessor(data);
   }
+
+  
   /**
    * update the professor data
    * @param id of the user
@@ -31,31 +37,36 @@ export class ProfessorsController implements OnApplicationShutdown{
    */
   @Patch('/:id')
   @ApiParam({ name: 'id' })
-  @ApiBody({ required: true, type: professorDTO })
+  @ApiBody({ required: true, type: ProfessorDTO })
   @ApiOperation({ summary: 'Update the data of a tarea' })
   @ApiNotFoundResponse({ description: 'tarea id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async updateProfesor(@Param('id') id: string, @Body() data: professorDTO) {
-    return this.professorService.updateProfessor(id, data);
+  async updateProfessor(@Param('id') id: string, @Body() data: ProfessorDTO) {
+    this.logger.verbose(`Update user ${id}`);
+    return this.professorService.editProfile(id, data);
   }  
+  
+  
   /**
-   * Delete and id of the tablero friends of the user
+   * Delete and id of the board friends of the user
    * @param id of the user
-   * @param idT of the tablero
+   * @param idT of the board
    */
   @Delete('/:id/:idT')
   @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Delete and id of the tablero friends of the user' })
+  @ApiOperation({ summary: 'Delete and id of the board friends of the user' })
   @ApiNotFoundResponse({ description: 'user id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async deleteTableroFriends(@Param('id') id: string, @Param('idT') idT: string) {
-    this.logger.verbose(`Delete and id of the tablero friends of the user ${id}`);
-    return this.professorService.deleteTableroFriends(id, idT);
+  async deleteSharedBoard(@Param('id') id: string, @Param('idT') idT: string) {
+    this.logger.verbose(`Delete and id of the board friends of the user ${id}`);
+    return this.professorService.deleteSharedBoard(id, idT);
   }
+  
+  
   /**
-   * Add a friend id to the tablero friend user data
+   * Add a friend id to the board friend user data
    * @param idU id of the user
    * @param idF id of the friend
    */
@@ -63,14 +74,16 @@ export class ProfessorsController implements OnApplicationShutdown{
   @ApiParam({ name: 'idUser', description: 'id of the user' })
   @ApiParam({ name: 'idFriend', description: 'id of the friend' })
   @ApiBody({ required: true })
-  @ApiOperation({ summary: ' Add a id in the tablero friend to the user data' })
+  @ApiOperation({ summary: ' Add a id in the board friend to the user data' })
   @ApiNotFoundResponse({ description: 'user id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async addTableroFriends(@Param('idUser') idU: string, @Param('idFriend') idF: string) {
-    this.logger.verbose('Add a friend id to the tablero friend user data');
-    return this.professorService.addTableroFriends(idU, idF);
+  async addSharedBoard(@Param('idUser') idU: string, @Param('idFriend') idF: string) {
+    this.logger.verbose('Add a friend id to the board friend user data');
+    return this.professorService.addSharedBoard(idU, idF);
   }
+  
+  
   /**
    * Validate the user exist
    * @param id of the person
@@ -81,9 +94,15 @@ export class ProfessorsController implements OnApplicationShutdown{
   @ApiNotFoundResponse({ description: 'owner id not found' })
   @ApiOperation({ summary: 'Get the system configuration' })
   @UsePipes(ValidationPipe)
-  async getTareasByOwmer(@Param('id') id: string) {
+  async getProfile(@Param('id') id: string) {
     this.logger.verbose(`Get an user ${id}`);
-    return await this.professorService.getProfessor(id);
+    return this.professorService.getProfile(id);
+  }
+
+  @Delete()
+  deleteProfile(@Param('id') id: string) {
+    this.logger.verbose(`Deleting user: ${id}`);
+    return this.professorService.deleteProfile(id);
   }
 
   /**
