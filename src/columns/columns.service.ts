@@ -2,61 +2,53 @@ import { Injectable, Logger, OnModuleInit, NotFoundException } from '@nestjs/com
 import { ColumnsRepository } from './columns.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ColumnsDTO } from './dto/columns.dto';
+import { BoardsRepository } from 'src/boards/boards.repository';
 /**
  * Injectable
  */
 @Injectable()
-export class ColumnsService implements OnModuleInit {
-    /**
-     * Variable for the logger
-     */
+export class ColumnsService {
+
     private logger: Logger = new Logger('ColumnsService');
-    /**
-     * First method in constructor
-     * @param columnsRepository Controller of column
-     */
+
     constructor(
         @InjectRepository(ColumnsRepository)
-        private columnsRepository: ColumnsRepository){} 
+        private columnsRepository: ColumnsRepository,
+        @InjectRepository(BoardsRepository)
+        private boardsRepo: BoardsRepository
+    ){} 
 
-    /**
-     * Initial module
-     */
-    async onModuleInit(){
-
-    }
-    /**
-     * Create a new column in the db
-     * @param data of the column
-     */
     async createColumns(data: ColumnsDTO){
-        let column = await this.columnsRepository.createColumn(data);
+        const column = await this.columnsRepository.createColumn(data);
         this.logger.verbose(`response from the database ${column}`);
+
+        const board = await this.boardsRepo.findOne(column.board);
+        board.columns.push(column.id);
+        await board.save();
+
         return column;
     }
-    /**
-     * Delete the column
-     * @param id string of the column
-     */
+
     async deleteColumn(id: string){
-        const find = await this.columnsRepository.find({
-            where: {id : id}
-        })
+        const find = await this.columnsRepository.findOne(id);
         if(!find){
-            throw new NotFoundException(`not found column with id ${id}`)
+            throw new NotFoundException(`not found column with id ${id}`);
         }
-        return await this.columnsRepository.delete(id);
+
+        const board = await this.boardsRepo.findOne(find.board);
+        const index = board.columns.findIndex((element) => element === id);
+        board.columns.splice(index, 1);
+        await board.save();
+
+        return find.remove();
     }
-    /**
-     * Get the column by the tablero id
-     * @param id of the tablero
-     */
-    async getColumnByTablero(id: string){
+
+    async getColumnsByBoard(id: string){
         const find = await this.columnsRepository.find({
-            where: {Tablero : id}
+            where: {board : id}
         })
         if(!find){
-            throw new NotFoundException(`Columns not found for the tablero id ${id}`)
+            throw new NotFoundException(`Columns not found for the board id ${id}`)
         }
         return find;
     }
