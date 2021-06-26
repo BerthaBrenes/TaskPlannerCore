@@ -41,6 +41,14 @@ export class StudentsService {
         return found;
     }
 
+    async getUserProfile(email: string){
+        const found = await this.stdRepository.findOne({ where: {email: email}});
+        if (!found) {
+            throw new NotFoundException(`Student with the id ${email} not found`);
+        }
+        return found;
+    }
+
     async deleteProfile(id: string): Promise<Student> {
         const found = await this.stdRepository.findOne(id);
         if (!found) {

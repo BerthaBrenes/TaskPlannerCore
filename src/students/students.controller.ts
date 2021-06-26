@@ -22,8 +22,14 @@ export class StudentsController {
 
     @Get('/:id')
     getProfile(@Param('id') id: string): Promise<Student> {
-        this.logger.verbose(`Get user's ${id} profile data`);
+        this.logger.verbose(`Get student's ${id} profile data`);
         return this.service.getProfile(id);
+    }
+
+    @Get('user/:email')
+    getUserProfile(@Param('email') email: string): Promise<Student> {
+        this.logger.verbose(`Get user's ${email} profile data`);
+        return this.service.getUserProfile(email);
     }
 
     @Delete('/:id')
