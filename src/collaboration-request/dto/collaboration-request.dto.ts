@@ -1,7 +1,6 @@
-import { IsOptional, IsEnum, IsNotEmpty, IsString } from "class-validator";
-import { statusType } from "src/request/dto/statusType.enum";
+import { IsOptional, IsString } from "class-validator";
 
-export class collaborationRequestDTO{
+export class CollaborationRequestDTO{
  
     @IsOptional()
     @IsString()

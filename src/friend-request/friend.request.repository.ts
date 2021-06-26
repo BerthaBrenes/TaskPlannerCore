@@ -1,15 +1,17 @@
-import { MongoRepository, BaseEntity, EntityRepository } from "typeorm";
+import { MongoRepository, EntityRepository } from "typeorm";
 import { FriendRequest } from "./friend.request.entity";
-import { requestDTO } from "./dto/friend-request.dto";
+import { RequestDTO } from "./dto/friend-request.dto";
+import { StatusType } from "src/data/statusType.enum";
 
 @EntityRepository(FriendRequest)
 export class FriendRequestRepository extends MongoRepository<FriendRequest>{
-    async createReq(data: requestDTO){
-        const {from, status, to} = data;
+    
+    async createRequest(data: RequestDTO){
+        const {from, to} = data;
         const request = new FriendRequest();
         request.from = from;
         request.to = to;
-        request.status = status;
+        request.status = StatusType.PENDING;
         return await request.save();
     }
 }

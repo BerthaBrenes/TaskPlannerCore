@@ -1,5 +1,6 @@
 import { BaseEntity, Entity, Column, ObjectIdColumn } from "typeorm";
-import { statusType } from "src/request/dto/statusType.enum";
+import { StatusType } from "src/data/statusType.enum";
+
 @Entity()
 export class FriendRequest extends BaseEntity{
     @ObjectIdColumn()
@@ -12,5 +13,5 @@ export class FriendRequest extends BaseEntity{
     to: string;
     
     @Column()
-    status: statusType;
+    status: StatusType;
 }
