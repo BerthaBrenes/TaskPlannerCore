@@ -61,18 +61,16 @@ export class TareasService {
      * @param id of the tarea
      * @param data of the tarea
      */
-    async updateTarea(id: string, data: tareasDTO) {
+    async updateTarea(id: string, data: {dependency, endDate, name, owner, priority}) {
         const found = await this.tareasRepository.findOne(id);
         if (!found) {
             throw new NotFoundException(`There is not tarea ${id}`)
         }
-        found.column.id = data.column;
         found.dependency = data.dependency;
         found.endDate = data.endDate;
         found.name = data.name;
         found.owner = data.owner;
         found.priority = data.priority;
-        found.startDate = data.startDate;
         return await found.save();
     }
     /**
