@@ -2,16 +2,13 @@ version: '3.8'
 
 services:
     app:
-        image: taskplanner
+        build: .
         environment: 
-            MONGO_URL:
-            POSTGRES_URL:
+            DATIC_URL: "http://datic:8080/datic/api/auth"
         depends_on: 
+            - datic
         ports: 
             - "3000:3000"
     
-    mongo:
-        image: mongo
-    
-    postgres:
-        image: postgres
+    datic: 
+        image: estalvgs/datic
