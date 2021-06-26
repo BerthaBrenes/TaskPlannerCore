@@ -6,22 +6,22 @@ import { priorityType } from './dto/priorityType.enum';
 
 @ApiTags('Tareas')
 @Controller('tareas')
-export class TareasController implements OnApplicationShutdown{
+export class TareasController implements OnApplicationShutdown {
   /**
       * Variable for the logger
       */
-     private logger: Logger = new Logger('Sis Controller');
-  
+  private logger: Logger = new Logger('Sis Controller');
+
   /**
    * First method in the tareas
    * @param tareaService Controller of the tareas
    */
-    constructor( private readonly tareaService: TareasService){}
-   
-    /**
-   * Create a new tarea
-   * @param data of the tarea
-   */
+  constructor(private readonly tareaService: TareasService) { }
+
+  /**
+ * Create a new tarea
+ * @param data of the tarea
+ */
   @Post()
   @ApiBody({ required: true, type: tareasDTO })
   @ApiResponse({ status: 200 })
@@ -35,49 +35,49 @@ export class TareasController implements OnApplicationShutdown{
      * Get the tarea by the column
      * @param id of the user
      */
-    @Get('column/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'column id not found' })
-    @ApiOperation({ summary: 'Get the tarea by the column' })
-    @UsePipes(ValidationPipe)
-    async getColumns(@Param('id') id: string) {
-        this.logger.verbose(`get a tarea by the column ${id}`);
-        return await this.tareaService.getTareaByColumn(id);
-    }
-    /**
-     * Get the tareas by the owner
-     * @param id of the user
-     */
-    @Get('owner/:id')
-    @ApiParam({ name: 'id' })
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'owner id not found' })
-    @ApiOperation({ summary: 'Get the system configuration' })
-    @UsePipes(ValidationPipe)
-    async getTareasByOwmer(@Param('id') id: string) {
-        this.logger.verbose(`Get the tareas by the owner ${id}`);
-        return await this.tareaService.getTareasByOwner(id);
-    }
-    /**
-     * Delete a tarea
-     * @param id of the column
-     */
-    @Delete('/:id')
-    @ApiParam({ name: 'id' })
-    @ApiOperation({ summary: 'Delete a tarea' })
-    @ApiNotFoundResponse({ description: 'tarea id not found' })
-    @ApiResponse({ status: 201 })
-    @UsePipes(ValidationPipe)
-    async deleteColumn(@Param('id') id : string){
-      this.logger.verbose(`Delete a tarea ${id}`);
-      return this.tareaService.delete(id);
-    }
-    /**
-   * Update the data of a tarea
+  @Get('column/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'column id not found' })
+  @ApiOperation({ summary: 'Get the tarea by the column' })
+  @UsePipes(ValidationPipe)
+  async getColumns(@Param('id') id: string) {
+    this.logger.verbose(`get a tarea by the column ${id}`);
+    return await this.tareaService.getTareaByColumn(id);
+  }
+  /**
+   * Get the tareas by the owner
    * @param id of the user
-   * @param type status of the request
    */
+  @Get('owner/:id')
+  @ApiParam({ name: 'id' })
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'owner id not found' })
+  @ApiOperation({ summary: 'Get the system configuration' })
+  @UsePipes(ValidationPipe)
+  async getTareasByOwmer(@Param('id') id: string) {
+    this.logger.verbose(`Get the tareas by the owner ${id}`);
+    return await this.tareaService.getTareasByOwner(id);
+  }
+  /**
+   * Delete a tarea
+   * @param id of the column
+   */
+  @Delete('/:id')
+  @ApiParam({ name: 'id' })
+  @ApiOperation({ summary: 'Delete a tarea' })
+  @ApiNotFoundResponse({ description: 'tarea id not found' })
+  @ApiResponse({ status: 201 })
+  @UsePipes(ValidationPipe)
+  async deleteColumn(@Param('id') id: string) {
+    this.logger.verbose(`Delete a tarea ${id}`);
+    return this.tareaService.delete(id);
+  }
+  /**
+ * Update the data of a tarea
+ * @param id of the user
+ * @param type status of the request
+ */
   @Patch('/:id')
   @ApiParam({ name: 'id' })
   @ApiBody({ required: true, type: tareasDTO })
@@ -116,11 +116,11 @@ export class TareasController implements OnApplicationShutdown{
   async changeColumn(@Param('id') id: string, @Param('column') column: string) {
     return this.tareaService.changeColumn(id, column);
   }
-   /**
-   * Change the priority of the tarea
-   * @param id of tarea
-   * @param dependency of the tarea
-   */
+  /**
+  * Change the priority of the tarea
+  * @param id of tarea
+  * @param dependency of the tarea
+  */
   @Put('Priority/:id/:priority')
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: ' Change the priority of the tarea' })
@@ -130,11 +130,11 @@ export class TareasController implements OnApplicationShutdown{
   async changePriority(@Param('id') id: string, @Param('priority') priority: priorityType) {
     return this.tareaService.changePriority(id, priority);
   }
-    /**
-     * proper shutdown of the microservice
-     * @param signal event
-     */
-    onApplicationShutdown(signal: string) {
-        console.log(signal); // e.g. "SIGINT"
-      }
+  /**
+   * proper shutdown of the microservice
+   * @param signal event
+   */
+  onApplicationShutdown(signal: string) {
+    console.log(signal); // e.g. "SIGINT"
+  }
 }
