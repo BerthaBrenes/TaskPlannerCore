@@ -1,156 +1,102 @@
-import { Controller, OnApplicationShutdown, Post, UsePipes, ValidationPipe, Body, Logger, Get, Param, Delete, Put } from '@nestjs/common';
+import { Controller, OnApplicationShutdown, Post, UsePipes, ValidationPipe, Body, Logger, Get, Param, Put } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiResponse, ApiNotFoundResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { SysConfigService } from './sysconfig.service';
 import { SysConfigDTO } from './dto/sysconfig.dto';
-import { tableroType } from 'src/boards/dto/tableroType.enum';
 
 @ApiTags('System Configuration')
 @Controller('config')
 export class SysConfigController implements OnApplicationShutdown {
-  /**
-      * Variable for the logger
-      */
-  private logger: Logger = new Logger('Sys Controller');
-  /**
-   * First method in the constructor
-   * @param sisconfigService Controller for the service
-   */
-  constructor(private readonly sisconfigService: SysConfigService) { }
 
-  /**
-   * Create a new config system
-   * @param data of the request
-   */
+  private logger: Logger = new Logger('Sys Controller');
+
+  constructor(private readonly sysConfigService: SysConfigService) { }
+
+
   @Post()
   @ApiBody({ required: true, type: SysConfigDTO })
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Create a new config system' })
   @UsePipes(ValidationPipe)
-  async createColumn(@Body() data: SysConfigDTO) {
+  async createConfig(@Body() data: SysConfigDTO) {
     this.logger.verbose(`Create a config`);
-    return await this.sisconfigService.CreateConfig(data);
+    return this.sysConfigService.CreateConfig(data);
   }
 
-  /**
-     * Get the hobbies system configuration
-     * @param id of the user
-     */
+
   @Get('hobbies')
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Get the hobbies system configuration' })
   @UsePipes(ValidationPipe)
   async getHobbies() {
     this.logger.verbose(`Get the hobbies system configuration `);
-    return await this.sisconfigService.getHobbies();
+    return this.sysConfigService.getHobbies();
   }
-  /**
-     * Get the system user configuration
-     * @param id of the user
-     */
-    @Get('SysConfig')
-    @ApiResponse({ status: 200 })
-    @ApiOperation({ summary: 'Get the system user configuration' })
-    @UsePipes(ValidationPipe)
-    async getSysConfig() {
-      this.logger.verbose(`Get the system user configuration `);
-      return await this.sisconfigService.getSysUser();
-    }
-    /**
-     * Get the avatar system configuration
-     * @param id of the user
-     */
+
+  @Get('uses')
+  @ApiResponse({ status: 200 })
+  @ApiOperation({ summary: 'Get the system user configuration' })
+  @UsePipes(ValidationPipe)
+  async getSysConfig() {
+    this.logger.verbose(`Get the system user configuration `);
+    return this.sysConfigService.getSysUses();
+  }
+
   @Get('avatar')
   @ApiResponse({ status: 200 })
   @ApiOperation({ summary: 'Get the avatar system configuration' })
   @UsePipes(ValidationPipe)
   async getAvatar() {
     this.logger.verbose(`Get the avatar system configuration`);
-    return await this.sisconfigService.getAvatar();
+    return this.sysConfigService.getAvatarList();
   }
-  /**
-     * Get the hobbies system configuration
-     * @param id of the user
-     */
-    @Get('types')
-    @ApiResponse({ status: 200 })
-    @ApiNotFoundResponse({ description: 'user id not found' })
-    @ApiOperation({ summary: 'Get the types system configuration' })
-    @UsePipes(ValidationPipe)
-    async getColumns() {
-      this.logger.verbose(`Get the types system configuration `);
-      return await this.sisconfigService.getBoardTypes();
-    }
 
-  /**
-   * Delete a config by the user
-   * @param id of the column
-   */
-  @Delete('/:id')
-  @ApiParam({ name: 'id' })
-  @ApiOperation({ summary: 'Delete a config by the user' })
-  @ApiNotFoundResponse({ description: 'config id not found' })
-  @ApiResponse({ status: 201 })
+  @Get('types')
+  @ApiResponse({ status: 200 })
+  @ApiNotFoundResponse({ description: 'user id not found' })
+  @ApiOperation({ summary: 'Get the types system configuration' })
   @UsePipes(ValidationPipe)
-  async deleteColumn(@Param('id') id: string) {
-    return this.sisconfigService.deleteConfig(id);
+  async getColumns() {
+    this.logger.verbose(`Get the types system configuration `);
+    return this.sysConfigService.getBoardTypes();
   }
 
-  /**
-   * Add a type in config
-   * @param lastModifi of the user
-   * @param type status of the request
-   */
-  @Put('types/:lastModifi/:type')
-  @ApiParam({ name: 'lastModifi' })
-  @ApiParam({ name: 'type' })
+  @Post('types/:by')
+  @ApiParam({ name: 'by' })
   @ApiOperation({ summary: ' Add a type in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async editBoardTypes(@Param('lastModifi') lastModifi: string, @Param('type') type: string[]) {
-    return this.sisconfigService.editBoardTypes(type, lastModifi);
+  async editBoardTypes(@Param('by') by: string, @Body() type: string[]) {
+    return this.sysConfigService.editBoardTypes(type, by);
   }
-  /**
-   * Add hobbies in config
-   * @param lastModifi of the user
-   * @param hobbies status of the request
-   */
-  @Put('types/:lastModifi/:hobbies')
-  @ApiParam({ name: 'lastModifi' })
-  @ApiParam({ name: 'hobbies' })
+
+  @Post('hobbies/:by')
+  @ApiParam({ name: 'by' })
   @ApiOperation({ summary: ' Add hobbies in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async editHobbies(@Param('lastModifi') lastModifi: string, @Param('hobbies') hobbies: string[]) {
-    return this.sisconfigService.editHobbies(hobbies, lastModifi);
+  async editHobbies(@Param('by') by: string, @Body() hobbies: string[]) {
+    return this.sysConfigService.editHobbies(hobbies, by);
   }
-  /**
-   * Add sysUsers in config
-   * @param lastModifi of the user
-   * @param sysUsers status of the request
-   */
-  @Put('types/:lastModifi/:sysUsers')
-  @ApiParam({ name: 'lastModifi' })
-  @ApiParam({ name: 'sysUsers' })
+
+  @Post('uses/:by')
+  @ApiParam({ name: 'by' })
   @ApiOperation({ summary: ' Add sysUsers in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async editSysUser(@Param('lastModifi') lastModifi: string, @Param('sysUsers') sysUsers: string[]) {
-    return this.sisconfigService.editSystemUser(sysUsers, lastModifi);
+  async editSysUser(@Param('by') by: string, @Body() sysUsers: string[]) {
+    return this.sysConfigService.editSystemUses(sysUsers, by);
   }
-  /**
-   * Add avatars in config
-   * @param lastModifi of the user
-   * @param hobbies status of the request
-   */
-  @Put('types/:lastModifi/:avatars')
-  @ApiParam({ name: 'lastModifi' })
-  @ApiParam({ name: 'avatars' })
+
+
+  @Post('avatar/:by')
+  @ApiParam({ name: 'by' })
   @ApiOperation({ summary: ' Add avatars in config' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async editAvatars(@Param('lastModifi') lastModifi: string, @Param('avatars') avatars: string[]) {
-    return this.sisconfigService.editAvatarList(avatars, lastModifi);
+  async editAvatars(@Param('by') by: string, @Body() avatars: string[]) {
+    return this.sysConfigService.editAvatarList(avatars, by);
   }
+
   /**
    * shutdown event
    * @param signal event
