@@ -1,4 +1,7 @@
 import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { tableroType } from "src/tableros/dto/tableroType.enum";
+import { applications } from "src/users/dto/applications.enum";
+import { hobbies } from "src/users/dto/hobbies.enum";
 
 @Entity()
 export class SisConfigI extends BaseEntity{
@@ -9,14 +12,14 @@ export class SisConfigI extends BaseEntity{
     idUser: string;
 
     @Column()
-    tableroType: string;
+    tableroType: tableroType;
 
     @Column()
     profilePhotos: string;
 
     @Column()
-    applications: string[];
+    applications: applications[];
 
     @Column()
-    hobbies: string[];
+    hobbies: hobbies[];
 }

@@ -1,4 +1,6 @@
-import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryColumn, Column, ManyToOne } from "typeorm";
+import { ColumnI } from "src/columns/columns.entity";
+import { priorityType } from "./dto/priorityType.enum";
 
 @Entity()
 export class TareasI extends BaseEntity{
@@ -9,7 +11,7 @@ export class TareasI extends BaseEntity{
     name: string;
 
     @Column()
-    priority: string;
+    priority: priorityType;
     
     @Column()
     startDate: string;
@@ -23,6 +25,6 @@ export class TareasI extends BaseEntity{
     @Column()
     dependency: string;
 
-    @Column()
-    column: string;
+    @ManyToOne(() => ColumnI, column => column.Tareas)
+    column: ColumnI;
 }

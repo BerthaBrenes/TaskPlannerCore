@@ -1,4 +1,7 @@
 import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { userType } from "./dto/userType.enum";
+import { hobbies } from "./dto/hobbies.enum";
+import { applications } from "./dto/applications.enum";
 
 @Entity()
 export class UserI extends BaseEntity{
@@ -49,13 +52,13 @@ export class UserI extends BaseEntity{
     profile_photo: string;
 
     @Column()
-    type: string;
+    type: userType;
 
     @Column()
-    application: string[];
+    application: applications[];
 
     @Column()
-    hobbies: string[];
+    hobbies: hobbies[];
 
     @Column()
     Tableros_Owner: string[];

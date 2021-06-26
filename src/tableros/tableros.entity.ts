@@ -1,4 +1,7 @@
-import { BaseEntity, Entity, PrimaryColumn, Column } from "typeorm";
+import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { ColumnI } from "src/columns/columns.entity";
+import { UserI } from "src/users/users.entity";
+import { tableroType } from "./dto/tableroType.enum";
 
 @Entity()
 export class TablerosI extends BaseEntity{
@@ -8,15 +11,19 @@ export class TablerosI extends BaseEntity{
     @Column()
     name: string;
 
-    @Column()
-    owner: string;
+    @ManyToOne(() => UserI, user => user.id)
+    owner: UserI;
     
+    @ManyToMany(() => UserI)
+    @JoinTable()
+    friends: UserI[];
+
     @Column()
-    type: string;
+    type: tableroType;
 
     @Column()
     description: string;
 
-    @Column()
-    columns: string;
+    @OneToMany(() => ColumnI, column => column.Tablero)
+    columns: ColumnI;
 }

@@ -1,0 +1,12 @@
+export enum hobbies{
+    MOVIES = "MOVIES",
+    DRAWING = "DRAWING",
+    MUSIC = "MUSIC",
+    VIDEOGAMES = "VIDEOGAMES",
+    READING = "READING",
+    TIKTOK = "TIKTOK",
+    FOOTBALL = "FOOTBALL",
+    DANCING = "DANCING",
+    EXERCISES = "EXERCISES",
+    INSTAGRAM = "INSTAGRAM"
+}
