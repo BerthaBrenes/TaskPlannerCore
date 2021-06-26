@@ -50,7 +50,6 @@ export class BoardsService {
 
     async getBoards(id: string) {
         const found = await this.repository.find({ where: { owner: id } });
-        Logger.verbose('get the board of the owner')
         if (!found) {
             throw new NotFoundException(`There are no boards with the owner id ${id} not found`);
         }

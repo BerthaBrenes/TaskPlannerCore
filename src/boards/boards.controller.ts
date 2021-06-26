@@ -6,7 +6,7 @@ import { BoardDTO } from './dto/boards.dto';
 export class BoardsController implements OnApplicationShutdown {
 
   
-  private logger: Logger = new Logger('Sis Controller');
+  private logger: Logger = new Logger('Boards Controller');
 
   
   constructor(private readonly service: BoardsService) { }
@@ -29,12 +29,14 @@ export class BoardsController implements OnApplicationShutdown {
   @Patch('/:id')
   @UsePipes(ValidationPipe)
   async updateBoard(@Param('id') id: string, @Body() data: { description, name }) {
+    this.logger.verbose(`Update the Board ${id}`);
     return this.service.updateBoard(id, data);
   }
   
   @Put('/:id/:col')
   @UsePipes(ValidationPipe)
   async addColumn(@Param('id') id: string, @Param('col') col: any) {
+    this.logger.verbose(`Add column the Board ${id}`);
     return this.service.addColumn(id, col);
   }
   
