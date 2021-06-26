@@ -23,7 +23,7 @@ export class BoardsService {
 
         const board = await this.repository.createBoard(data);
         const user = await this.stdRepository.findOne(data.owner);
-        user.myBoards.push(found.id);
+        user.myBoards.push(board.id);
         await user.save();
 
         return board;
