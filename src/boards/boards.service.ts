@@ -23,13 +23,13 @@ export class BoardsService {
         return await this.tableroRepo.createBoard(data);
     }
     /**
-     * Delete the tablero
-     * @param id of the tablero
+     * Delete the Board
+     * @param id of the Board
      */
-    async deleteTablero(id: string) {
+    async deleteBoard(id: string) {
         const found = await this.tableroRepo.findOne(id);
         if (!found) {
-            throw new NotFoundException(`The tablero with the id ${id} not found`);
+            throw new NotFoundException(`The Board with the id ${id} not found`);
         }
         return await this.tableroRepo.delete(id);
     }
