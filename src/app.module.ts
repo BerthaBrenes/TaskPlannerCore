@@ -7,7 +7,6 @@ import { BoardsModule } from './boards/boards.module';
 import { TareasModule } from './tareas/tareas.module';
 import { ColumnsModule } from './columns/columns.module';
 import { AuthModule } from './auth/auth.module';
-import { RequestModule } from './request/request.module';
 import { UsersModule } from './users/users.module';
 import { SisconfigModule } from './sysconfig/sysconfig.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -28,7 +27,6 @@ import { CollaborationRequestModule } from './collaboration-request/collaboratio
     TareasModule,
     ColumnsModule,
     AuthModule,
-    RequestModule,
     UsersModule,
     SisconfigModule,
     TypeOrmModule.forRoot(typeOrmConfig),
