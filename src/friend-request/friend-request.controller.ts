@@ -1,6 +1,6 @@
-import { Controller, Logger, Post, UsePipes, ValidationPipe, Body, Put, Param, Get, Patch } from '@nestjs/common';
+import { Controller, Logger, Post, UsePipes, ValidationPipe, Body, Param, Get, Patch } from '@nestjs/common';
 import { FriendRequestService } from './friend-request.service';
-import { requestDTO } from './dto/friend-request.dto';
+import { RequestDTO } from './dto/friend-request.dto';
 import { StatusType } from 'src/data/statusType.enum';
 
 @Controller('friend-request')
@@ -12,9 +12,9 @@ export class FriendRequestController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createRequest(@Body() data: requestDTO) {
+  async createRequest(@Body() data: RequestDTO) {
     this.logger.verbose(`Create a friend request`);
-    return await this.service.createRequest(data);
+    return this.service.createRequest(data);
   }
 
   @Patch('/:id/:status')
@@ -28,7 +28,7 @@ export class FriendRequestController {
   @UsePipes(ValidationPipe)
   async getSentRequests(@Param('id') id: string) {
     this.logger.verbose(`Get the sent requests of ${id}`);
-    return await this.service.getSentRequests(id);
+    return this.service.getSentRequests(id);
   }
 
 
@@ -36,6 +36,6 @@ export class FriendRequestController {
   @UsePipes(ValidationPipe)
   async getReceivedRequest(@Param('id') id: string) {
     this.logger.verbose(`Get the received request of ${id}`);
-    return await this.service.getReceivedRequests(id);
+    return this.service.getReceivedRequests(id);
   }
 }

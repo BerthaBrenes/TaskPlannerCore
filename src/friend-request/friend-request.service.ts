@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FriendRequestRepository } from './friend.request.repository';
-import { requestDTO } from './dto/friend-request.dto';
+import { RequestDTO } from './dto/friend-request.dto';
 import { StatusType } from 'src/data/statusType.enum';
 import { StudentRepository } from 'src/students/students.repository';
 import { FriendRequest } from './friend.request.entity';
@@ -17,7 +17,7 @@ export class FriendRequestService {
     ) { }
 
 
-    async createRequest(data: requestDTO) {
+    async createRequest(data: RequestDTO) {
         return this.requestRepository.createRequest(data);
     }
 
@@ -43,7 +43,7 @@ export class FriendRequestService {
     }
 
     async getSentRequests(id: string) {
-        const found = await this.requestRepository.find({ where: { from: id } });
+        const found = await this.requestRepository.find({ where: { from: id, status: "PENDING" } });
         if (!found) {
             throw new NotFoundException(`Request with the id ${id} not found`);
         }
@@ -52,11 +52,11 @@ export class FriendRequestService {
     }
 
     async getReceivedRequests(id: string) {
-        const found = await this.requestRepository.find({ where: { to: id } });
+        const found = await this.requestRepository.find({ where: { from: id, status: "PENDING" } });
         if (!found) {
             throw new NotFoundException(`Request with the id ${id} not found`)
         }
-        return this.getFriendsList(found);;
+        return this.getFriendsList(found);
     }
     
 
@@ -64,8 +64,8 @@ export class FriendRequestService {
         const friendList = [];
 
         for await (const r of requests){
-            const from = await (await this.stdRepository.findOne(r.from)).name;
-            const to = await (await this.stdRepository.findOne(r.to)).name;
+            const from = (await this.stdRepository.findOne(r.from)).name;
+            const to = (await this.stdRepository.findOne(r.to)).name;
             friendList.push({from: from, to: to, status: r.status});
         }
 

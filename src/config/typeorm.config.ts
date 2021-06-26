@@ -4,7 +4,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
  */
 export const typeOrmConfig: TypeOrmModuleOptions = {
     type: 'mongodb',
-    url: 'mongodb+srv://db_client:tpmdb_client2021@taskplannerce.vdwdf.mongodb.net/taskplannerdb?retryWrites=true&w=majority&ssl=true',
+    url: 'mongodb+srv://db_client:tpmdb_client2021@taskplannerce.vdwdf.mongodb.net/taskplannerdb?retryWrites=false&w=majority',
     port: 27017,
     useNewUrlParser: true,
     entities: [
