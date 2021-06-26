@@ -50,12 +50,11 @@ export class BoardsController implements OnApplicationShutdown {
   */
   @Patch('/:id')
   @ApiParam({ name: 'id' })
-  @ApiBody({ required: true, type: BoardDTO })
   @ApiOperation({ summary: 'Update the data of a tarea' })
   @ApiNotFoundResponse({ description: 'tarea id not found' })
   @ApiResponse({ status: 201 })
   @UsePipes(ValidationPipe)
-  async updateTarea(@Param('id') id: string, @Body() data: BoardDTO) {
+  async updateTarea(@Param('id') id: string, @Body() data: {description, name}) {
     return this.tableroService.updateTablero(id, data);
   }
   /**
