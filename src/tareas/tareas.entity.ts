@@ -1,17 +1,17 @@
-import { BaseEntity, Entity, PrimaryColumn, Column, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, Column, ObjectIdColumn} from "typeorm";
 import { ColumnI } from "../columns/columns.entity";
-import { priorityType } from "./dto/priorityType.enum";
+import { PriorityType } from "./dto/priorityType.enum";
 
 @Entity()
 export class TareasI extends BaseEntity{
-    @PrimaryColumn()
+    @ObjectIdColumn()
     id: string;
 
     @Column()
     name: string;
 
     @Column()
-    priority: priorityType;
+    priority: PriorityType;
     
     @Column()
     startDate: string;
