@@ -65,7 +65,7 @@ export class BoardsService {
      * Get the Columns by a tablero
      * @param id of the tablero
      */
-    async getColumns(id: string) {
+    async getBoard(id: string) {
         const found = await this.tableroRepo.findOne(id);
         if (!found) {
             throw new NotFoundException(`The tablero with the id ${id} not found`);
