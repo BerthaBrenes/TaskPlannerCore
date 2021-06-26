@@ -64,6 +64,8 @@ export class StudentsService {
         found.provinceOfResidence = data.provinceOfResidence;
         found.provinceOfProvenance = data.provinceOfProvenance;
         found.avatarUrl = data.avatarUrl;
+
+        return found.save();
     }
 
     
