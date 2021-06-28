@@ -1,18 +1,13 @@
-import { BaseEntity, Entity, PrimaryColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { TablerosI } from 'src/tableros/tableros.entity';
-import { TareasI } from 'src/tareas/tareas.entity';
-
+import { BaseEntity, Entity, Column, ObjectIdColumn } from 'typeorm';
 @Entity()
 export class ColumnI extends BaseEntity{
-    @PrimaryColumn()
+    @ObjectIdColumn()
     id: string
 
     @Column()
     name: string;
-
-    @ManyToOne(()=> TablerosI, tablero => tablero.columns)
-    Tablero: TablerosI;
-    
-    @OneToMany(() => TareasI, tareas => tareas.column )
-    Tareas: TareasI;
+    @Column()
+    board: string;
+    @Column()
+    tasks: string[];
 }

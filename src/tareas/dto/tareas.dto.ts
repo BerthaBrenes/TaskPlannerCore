@@ -1,6 +1,7 @@
 import { IsString, IsNotEmpty, IsOptional } from "class-validator";
+import { PriorityType } from "./priorityType.enum";
 
-export class tareasDTO{
+export class TareasDTO{
 
     @IsString()
     @IsNotEmpty()
@@ -8,7 +9,7 @@ export class tareasDTO{
 
     @IsString()
     @IsNotEmpty()
-    priority: string;
+    priority: PriorityType;
     
     @IsNotEmpty()
     @IsString()
@@ -23,8 +24,7 @@ export class tareasDTO{
     owner: string;
 
     @IsNotEmpty()
-    @IsString()
-    dependency: string;
+    dependency: string[];
 
     @IsOptional()
     column: any;
